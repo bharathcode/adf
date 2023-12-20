@@ -1,0 +1,9 @@
+{
+	"name": "azurelearning14122023",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "d6351a5e-a981-4cfb-b3d5-4b02f54783b3",
+		"tenantId": "71ecf320-803a-4abe-9c82-18c5ea43ab5a"
+	}
+}

@@ -1,0 +1,19 @@
+{
+	"name": "jsoncontainer",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "azuredatalakegen2_14122023",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "json"
+			}
+		},
+		"schema": {}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

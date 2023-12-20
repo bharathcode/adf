@@ -1,0 +1,6 @@
+{
+	"name": "appvmintegrationruntime",
+	"properties": {
+		"type": "SelfHosted"
+	}
+}
