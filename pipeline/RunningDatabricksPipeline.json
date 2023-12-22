@@ -15,7 +15,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Users/chittibhargavasitara@gmail.com/jobbasedcluster"
+					"notebookPath": "/Users/chittibhargavasitara@gmail.com/CopyDatatoTable"
 				},
 				"linkedServiceName": {
 					"referenceName": "aaasproductiondatabricks_service",
