@@ -19,13 +19,13 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'azuredatalakegen2_14122023'"
 		},
-		"azuredatalakegen2_14122023_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://aaasproduction14122023.dfs.core.windows.net/"
-		},
 		"aaasproductiondatabricks_service_properties_typeProperties_existingClusterId": {
 			"type": "string",
 			"defaultValue": "1222-103222-m99vqqnr"
+		},
+		"azuredatalakegen2_14122023_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://aaasproduction14122023.dfs.core.windows.net/"
 		}
 	},
 	"variables": {
@@ -59,6 +59,22 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/aaasproductiondatabricks_service')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-8833031668635703.3.azuredatabricks.net",
+					"authentication": "MSI",
+					"workspaceResourceId": "/subscriptions/0da5ecc7-9efa-45b7-bb8b-b43992ea47d4/resourceGroups/azurelearning14122023/providers/Microsoft.Databricks/workspaces/aaasproduction",
+					"existingClusterId": "[parameters('aaasproductiondatabricks_service_properties_typeProperties_existingClusterId')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/azuredatalakegen2_14122023')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -76,20 +92,40 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/aaasproductiondatabricks_service')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"name": "[concat(parameters('factoryName'), '/RunningDatabricksPipeline')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"annotations": [],
-				"type": "AzureDatabricks",
-				"typeProperties": {
-					"domain": "https://adb-8833031668635703.3.azuredatabricks.net",
-					"authentication": "MSI",
-					"workspaceResourceId": "/subscriptions/0da5ecc7-9efa-45b7-bb8b-b43992ea47d4/resourceGroups/azurelearning14122023/providers/Microsoft.Databricks/workspaces/aaasproduction",
-					"existingClusterId": "[parameters('aaasproductiondatabricks_service_properties_typeProperties_existingClusterId')]"
-				}
+				"activities": [
+					{
+						"name": "Notebook1",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/chittibhargavasitara@gmail.com/CopyDatatoTable"
+						},
+						"linkedServiceName": {
+							"referenceName": "aaasproductiondatabricks_service",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/aaasproductiondatabricks_service')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
@@ -1099,46 +1135,6 @@
 				"typeProperties": {
 					"schema": "dbo",
 					"table": "FactSales"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSynapseAnalytics_connection')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSynapseAnalyticsTable6')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSynapseAnalytics_connection",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlDWTable",
-				"schema": [
-					{
-						"name": "CustomerSK",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "CustomerID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "CompanyName",
-						"type": "varchar"
-					},
-					{
-						"name": "SalesPerson",
-						"type": "varchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "DimCustomer"
 				}
 			},
 			"dependsOn": [
