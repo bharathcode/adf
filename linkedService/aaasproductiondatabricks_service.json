@@ -1,0 +1,13 @@
+{
+	"name": "aaasproductiondatabricks_service",
+	"properties": {
+		"annotations": [],
+		"type": "AzureDatabricks",
+		"typeProperties": {
+			"domain": "https://adb-8833031668635703.3.azuredatabricks.net",
+			"authentication": "MSI",
+			"workspaceResourceId": "/subscriptions/0da5ecc7-9efa-45b7-bb8b-b43992ea47d4/resourceGroups/azurelearning14122023/providers/Microsoft.Databricks/workspaces/aaasproduction",
+			"existingClusterId": "1222-103222-m99vqqnr"
+		}
+	}
+}
