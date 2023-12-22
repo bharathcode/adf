@@ -1,0 +1,30 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "azurelearning14122023"
+		},
+		"AzureSqlDatabase_test_connectionString": {
+			"value": ""
+		},
+		"AzureSynapseAnalytics_connection_connectionString": {
+			"value": ""
+		},
+		"azuredatalakegen2_14122023_accountKey": {
+			"value": ""
+		},
+		"azuredatalakegen2_14122023_properties_typeProperties_url": {
+			"value": "https://aaasproduction14122023.dfs.core.windows.net/"
+		},
+		"aaasproductiondatabricks_service_properties_typeProperties_existingClusterId": {
+			"value": "1222-103222-m99vqqnr"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}

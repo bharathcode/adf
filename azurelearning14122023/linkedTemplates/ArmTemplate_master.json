@@ -1,0 +1,117 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "azurelearning14122023"
+		},
+		"AzureSqlDatabase_test_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase_test'"
+		},
+		"AzureSynapseAnalytics_connection_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSynapseAnalytics_connection'"
+		},
+		"azuredatalakegen2_14122023_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'azuredatalakegen2_14122023'"
+		},
+		"azuredatalakegen2_14122023_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://aaasproduction14122023.dfs.core.windows.net/"
+		},
+		"aaasproductiondatabricks_service_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "1222-103222-m99vqqnr"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "azurelearning14122023_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AzureSqlDatabase_test_connectionString": {
+						"value": "[parameters('AzureSqlDatabase_test_connectionString')]"
+					},
+					"AzureSynapseAnalytics_connection_connectionString": {
+						"value": "[parameters('AzureSynapseAnalytics_connection_connectionString')]"
+					},
+					"azuredatalakegen2_14122023_accountKey": {
+						"value": "[parameters('azuredatalakegen2_14122023_accountKey')]"
+					},
+					"azuredatalakegen2_14122023_properties_typeProperties_url": {
+						"value": "[parameters('azuredatalakegen2_14122023_properties_typeProperties_url')]"
+					},
+					"aaasproductiondatabricks_service_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('aaasproductiondatabricks_service_properties_typeProperties_existingClusterId')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "azurelearning14122023_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'azurelearning14122023_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "azurelearning14122023_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'azurelearning14122023_ArmTemplate_1')]"
+			]
+		}
+	]
+}
