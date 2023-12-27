@@ -60,7 +60,7 @@
 					},
 					"sink": {
 						"type": "SqlDWSink",
-						"allowCopyCommand": true
+						"writeBehavior": "Insert"
 					},
 					"enableStaging": true,
 					"stagingSettings": {
