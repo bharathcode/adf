@@ -27,6 +27,10 @@
 			"type": "string",
 			"defaultValue": "https://aaasproduction14122023.dfs.core.windows.net/"
 		},
+		"blobtrigger_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/0da5ecc7-9efa-45b7-bb8b-b43992ea47d4/resourceGroups/azurelearning14122023/providers/Microsoft.Storage/storageAccounts/aaasproduction14122023"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -106,6 +110,9 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"blobtrigger_properties_typeProperties_scope": {
+						"value": "[parameters('blobtrigger_properties_typeProperties_scope')]"
 					}
 				}
 			},

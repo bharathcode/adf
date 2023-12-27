@@ -6,6 +6,10 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "azurelearning14122023"
+		},
+		"blobtrigger_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/0da5ecc7-9efa-45b7-bb8b-b43992ea47d4/resourceGroups/azurelearning14122023/providers/Microsoft.Storage/storageAccounts/aaasproduction14122023"
 		}
 	},
 	"variables": {
@@ -1462,7 +1466,7 @@
 								"storeSettings": {
 									"type": "AzureBlobFSReadSettings",
 									"recursive": true,
-									"wildcardFileName": "part-00000-0d9acb8d-6616-420b-9f77-a3fbf93c54b0-c000.json",
+									"wildcardFileName": "*.json",
 									"enablePartitionDiscovery": false
 								},
 								"formatSettings": {
@@ -1471,8 +1475,7 @@
 							},
 							"sink": {
 								"type": "SqlDWSink",
-								"allowCopyCommand": true,
-								"copyCommandSettings": {}
+								"writeBehavior": "Insert"
 							},
 							"enableStaging": true,
 							"stagingSettings": {
@@ -1572,6 +1575,36 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/appmetricoutput')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/blobtrigger')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "pipeline1",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/appmetricstaging/blobs/PT1H",
+					"ignoreEmptyBlobs": false,
+					"scope": "[parameters('blobtrigger_properties_typeProperties_scope')]",
+					"events": [
+						"Microsoft.Storage.BlobCreated"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/pipeline1')]"
 			]
 		}
 	]

@@ -20,6 +20,9 @@
 		"azuredatalakegen2_14122023_properties_typeProperties_url": {
 			"value": "https://aaasproduction14122023.dfs.core.windows.net/"
 		},
+		"blobtrigger_properties_typeProperties_scope": {
+			"value": "/subscriptions/0da5ecc7-9efa-45b7-bb8b-b43992ea47d4/resourceGroups/azurelearning14122023/providers/Microsoft.Storage/storageAccounts/aaasproduction14122023"
+		},
 		"containerUri": {
 			"value": ""
 		},
