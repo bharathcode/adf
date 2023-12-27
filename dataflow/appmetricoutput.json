@@ -41,6 +41,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
+				"     purgeFiles: true,",
 				"     documentForm: 'documentPerLine') ~> appmetricstagingsource",
 				"appmetricstagingsource select(mapColumn(",
 				"          average,",
