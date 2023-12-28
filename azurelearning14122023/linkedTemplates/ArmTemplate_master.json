@@ -19,6 +19,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'azuredatalakegen2_14122023'"
 		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://aaasproduction14122023.dfs.core.windows.net/"
+		},
 		"aaasproductiondatabricks_service_properties_typeProperties_existingClusterId": {
 			"type": "string",
 			"defaultValue": "1222-103222-m99vqqnr"
@@ -66,6 +70,9 @@
 					},
 					"azuredatalakegen2_14122023_accountKey": {
 						"value": "[parameters('azuredatalakegen2_14122023_accountKey')]"
+					},
+					"AzureDataLakeStorage1_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
 					},
 					"aaasproductiondatabricks_service_properties_typeProperties_existingClusterId": {
 						"value": "[parameters('aaasproductiondatabricks_service_properties_typeProperties_existingClusterId')]"
