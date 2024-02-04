@@ -99,7 +99,7 @@
 							{
 								"source": {
 									"name": "Time",
-									"type": "DateTime",
+									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
