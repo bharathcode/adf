@@ -14,99 +14,37 @@
 				"precision": 10
 			},
 			{
-				"name": "RevisionNumber",
-				"type": "tinyint",
-				"precision": 3
-			},
-			{
-				"name": "OrderDate",
-				"type": "datetime",
-				"precision": 23,
-				"scale": 3
-			},
-			{
-				"name": "DueDate",
-				"type": "datetime",
-				"precision": 23,
-				"scale": 3
-			},
-			{
-				"name": "ShipDate",
-				"type": "datetime",
-				"precision": 23,
-				"scale": 3
-			},
-			{
-				"name": "Status",
-				"type": "tinyint",
-				"precision": 3
-			},
-			{
-				"name": "OnlineOrderFlag",
-				"type": "bit"
-			},
-			{
-				"name": "SalesOrderNumber",
-				"type": "nvarchar"
-			},
-			{
-				"name": "PurchaseOrderNumber",
-				"type": "nvarchar"
-			},
-			{
-				"name": "AccountNumber",
-				"type": "nvarchar"
-			},
-			{
-				"name": "CustomerID",
+				"name": "SalesOrderDetailID",
 				"type": "int",
 				"precision": 10
 			},
 			{
-				"name": "ShipToAddressID",
+				"name": "OrderQty",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "ProductID",
 				"type": "int",
 				"precision": 10
 			},
 			{
-				"name": "BillToAddressID",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "ShipMethod",
-				"type": "nvarchar"
-			},
-			{
-				"name": "CreditCardApprovalCode",
-				"type": "varchar"
-			},
-			{
-				"name": "SubTotal",
+				"name": "UnitPrice",
 				"type": "money",
 				"precision": 19,
 				"scale": 4
 			},
 			{
-				"name": "TaxAmt",
+				"name": "UnitPriceDiscount",
 				"type": "money",
 				"precision": 19,
 				"scale": 4
 			},
 			{
-				"name": "Freight",
-				"type": "money",
-				"precision": 19,
-				"scale": 4
-			},
-			{
-				"name": "TotalDue",
-				"type": "money",
-				"precision": 19,
-				"scale": 4
-			},
-			{
-				"name": "Comment",
-				"type": "nvarchar"
+				"name": "LineTotal",
+				"type": "decimal",
+				"precision": 38,
+				"scale": 6
 			},
 			{
 				"name": "rowguid",
