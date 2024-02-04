@@ -1,5 +1,5 @@
 {
-	"name": "AzureSqlTable2",
+	"name": "salesorderDetail",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dp203sqldatabase",
