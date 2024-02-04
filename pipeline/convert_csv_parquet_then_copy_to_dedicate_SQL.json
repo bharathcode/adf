@@ -229,7 +229,7 @@
 							{
 								"source": {
 									"name": "Correlationid",
-									"type": "String"
+									"type": "UTF8"
 								},
 								"sink": {
 									"name": "Correlationid",
@@ -239,7 +239,7 @@
 							{
 								"source": {
 									"name": "Operationname",
-									"type": "String"
+									"type": "UTF8"
 								},
 								"sink": {
 									"name": "Operationname",
@@ -249,7 +249,7 @@
 							{
 								"source": {
 									"name": "Status",
-									"type": "String"
+									"type": "UTF8"
 								},
 								"sink": {
 									"name": "Status",
@@ -259,7 +259,7 @@
 							{
 								"source": {
 									"name": "Eventcategory",
-									"type": "String"
+									"type": "UTF8"
 								},
 								"sink": {
 									"name": "Eventcategory",
@@ -269,7 +269,7 @@
 							{
 								"source": {
 									"name": "Level",
-									"type": "String"
+									"type": "UTF8"
 								},
 								"sink": {
 									"name": "Level",
@@ -279,7 +279,7 @@
 							{
 								"source": {
 									"name": "Time",
-									"type": "DateTime"
+									"type": "UTF8"
 								},
 								"sink": {
 									"name": "Time",
@@ -289,7 +289,7 @@
 							{
 								"source": {
 									"name": "Subscription",
-									"type": "String"
+									"type": "UTF8"
 								},
 								"sink": {
 									"name": "Subscription",
@@ -299,7 +299,7 @@
 							{
 								"source": {
 									"name": "Eventinitiatedby",
-									"type": "String"
+									"type": "UTF8"
 								},
 								"sink": {
 									"name": "Eventinitiatedby",
@@ -309,7 +309,7 @@
 							{
 								"source": {
 									"name": "Resourcetype",
-									"type": "String"
+									"type": "UTF8"
 								},
 								"sink": {
 									"name": "Resourcetype",
@@ -319,7 +319,7 @@
 							{
 								"source": {
 									"name": "Resourcegroup",
-									"type": "String"
+									"type": "UTF8"
 								},
 								"sink": {
 									"name": "Resourcegroup",
@@ -329,7 +329,7 @@
 							{
 								"source": {
 									"name": "Resource",
-									"type": "String"
+									"type": "UTF8"
 								},
 								"sink": {
 									"name": "Resource",
