@@ -53,6 +53,10 @@
 			{
 				"name": "Resource",
 				"type": "varchar"
+			},
+			{
+				"name": "filepath",
+				"type": "varchar"
 			}
 		],
 		"typeProperties": {
