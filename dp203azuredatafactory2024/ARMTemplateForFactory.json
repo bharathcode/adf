@@ -2680,7 +2680,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": "Customer01.csv",
+						"fileName": "Customer02.csv",
 						"folderPath": "customer",
 						"fileSystem": "csv"
 					},
@@ -3794,6 +3794,13 @@
 								"type": "DatasetReference"
 							},
 							"name": "ProductCategory"
+						},
+						{
+							"dataset": {
+								"referenceName": "AzureSynapseAnalyticsTable6",
+								"type": "DatasetReference"
+							},
+							"name": "getmaxcustomerkey"
 						}
 					],
 					"sinks": [
@@ -3810,6 +3817,13 @@
 								"type": "DatasetReference"
 							},
 							"name": "dimproduct"
+						},
+						{
+							"name": "CustomerSKCacheSink",
+							"rejectedDataLinkedService": {
+								"referenceName": "log_csv_ADLS_Gen2_Source",
+								"type": "LinkedServiceReference"
+							}
 						}
 					],
 					"transformations": [
@@ -3830,6 +3844,9 @@
 						},
 						{
 							"name": "CustomerSK"
+						},
+						{
+							"name": "CustomerSKupdated"
 						}
 					],
 					"scriptLines": [
@@ -3897,6 +3914,15 @@
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
 						"     format: 'table') ~> ProductCategory",
+						"source(output(",
+						"          CustomerSK as integer",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     query: 'select max(CustomerSK) as CustomerSK from dimcustomer',",
+						"     format: 'query',",
+						"     staged: true) ~> getmaxcustomerkey",
 						"Product, ProductModel join(Product@ProductModelID == ProductModel@ProductModelID,",
 						"     joinType:'left',",
 						"     matchType:'exact',",
@@ -3930,7 +3956,8 @@
 						"select2 keyGenerate(output(CustomerSK as long),",
 						"     startAt: 1L,",
 						"     stepValue: 1L) ~> CustomerSK",
-						"CustomerSK sink(allowSchemaDrift: true,",
+						"CustomerSK derive(CustomerSK = CustomerSK + CustomerSKCacheSink#outputs()[1].CustomerSK) ~> CustomerSKupdated",
+						"CustomerSKupdated sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
 						"          CustomerSK as integer,",
@@ -3950,7 +3977,7 @@
 						"     errorHandlingOption: 'stopOnFirstError',",
 						"     mapColumn(",
 						"          CustomerSK,",
-						"          CustomerID,",
+						"          CustomerID = CustomerSK,",
 						"          CompanyName,",
 						"          SalesPerson",
 						"     )) ~> dimcustomer",
@@ -3983,7 +4010,17 @@
 						"          ProductName,",
 						"          ProductModelName,",
 						"          ProductCategoryName",
-						"     )) ~> dimproduct"
+						"     )) ~> dimproduct",
+						"getmaxcustomerkey sink(validateSchema: false,",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     store: 'cache',",
+						"     format: 'inline',",
+						"     output: false,",
+						"     saveOrder: 1,",
+						"     mapColumn(",
+						"          CustomerSK",
+						"     )) ~> CustomerSKCacheSink"
 					]
 				}
 			},
@@ -3992,8 +4029,10 @@
 				"[concat(variables('factoryId'), '/datasets/product_sqldatabase')]",
 				"[concat(variables('factoryId'), '/datasets/ProductModel')]",
 				"[concat(variables('factoryId'), '/datasets/ProductCategory')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSynapseAnalyticsTable6')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSynapseAnalyticsTable4')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSynapseAnalyticsTable5')]"
+				"[concat(variables('factoryId'), '/datasets/AzureSynapseAnalyticsTable5')]",
+				"[concat(variables('factoryId'), '/linkedServices/log_csv_ADLS_Gen2_Source')]"
 			]
 		},
 		{
@@ -4465,8 +4504,10 @@
 									"Product": {},
 									"ProductModel": {},
 									"ProductCategory": {},
+									"getmaxcustomerkey": {},
 									"dimcustomer": {},
-									"dimproduct": {}
+									"dimproduct": {},
+									"CustomerSKCacheSink": {}
 								}
 							},
 							"staging": {
@@ -4492,6 +4533,46 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/dimcustomer_cache_feature')]",
 				"[concat(variables('factoryId'), '/linkedServices/log_csv_ADLS_Gen2_Source')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSynapseAnalyticsTable6')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlDWTable",
+				"schema": [
+					{
+						"name": "CustomerSK",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CustomerID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CompanyName",
+						"type": "varchar"
+					},
+					{
+						"name": "SalesPerson",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "DimCustomer"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSynapseAnalytics_log_csv_dedicated_Destination')]"
 			]
 		}
 	]
