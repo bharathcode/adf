@@ -1850,7 +1850,14 @@
 									"useTypeDefault": true
 								}
 							},
-							"enableStaging": false,
+							"enableStaging": true,
+							"stagingSettings": {
+								"linkedServiceName": {
+									"referenceName": "log_csv_ADLS_Gen2_Source",
+									"type": "LinkedServiceReference"
+								},
+								"path": "staging"
+							},
 							"translator": {
 								"type": "TabularTranslator",
 								"mappings": [
@@ -1991,7 +1998,8 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/SourceDataset_y7e')]",
 				"[concat(variables('factoryId'), '/datasets/parquetfile_destination')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSynapseAnalyticsTable1')]"
+				"[concat(variables('factoryId'), '/datasets/AzureSynapseAnalyticsTable1')]",
+				"[concat(variables('factoryId'), '/linkedServices/log_csv_ADLS_Gen2_Source')]"
 			]
 		},
 		{
