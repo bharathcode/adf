@@ -1,0 +1,9 @@
+{
+	"name": "dp203azuredatafactory2024",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "96cd43ba-b457-4a1d-bb13-4dafa40e696c",
+		"tenantId": "e48c6232-a2fe-4767-a592-5dbd1a8b478f"
+	}
+}
