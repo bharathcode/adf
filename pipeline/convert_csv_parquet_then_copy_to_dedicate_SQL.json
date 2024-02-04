@@ -99,7 +99,7 @@
 							{
 								"source": {
 									"name": "Time",
-									"type": "String",
+									"type": "DateTime",
 									"physicalType": "String"
 								},
 								"sink": {
@@ -229,7 +229,7 @@
 							{
 								"source": {
 									"name": "Correlationid",
-									"type": "UTF8"
+									"type": "String"
 								},
 								"sink": {
 									"name": "Correlationid",
@@ -239,7 +239,7 @@
 							{
 								"source": {
 									"name": "Operationname",
-									"type": "UTF8"
+									"type": "String"
 								},
 								"sink": {
 									"name": "Operationname",
@@ -249,7 +249,7 @@
 							{
 								"source": {
 									"name": "Status",
-									"type": "UTF8"
+									"type": "String"
 								},
 								"sink": {
 									"name": "Status",
@@ -259,7 +259,7 @@
 							{
 								"source": {
 									"name": "Eventcategory",
-									"type": "UTF8"
+									"type": "String"
 								},
 								"sink": {
 									"name": "Eventcategory",
@@ -269,7 +269,7 @@
 							{
 								"source": {
 									"name": "Level",
-									"type": "UTF8"
+									"type": "String"
 								},
 								"sink": {
 									"name": "Level",
@@ -279,17 +279,17 @@
 							{
 								"source": {
 									"name": "Time",
-									"type": "UTF8"
+									"type": "String"
 								},
 								"sink": {
 									"name": "Time",
-									"type": "String"
+									"type": "DateTime"
 								}
 							},
 							{
 								"source": {
 									"name": "Subscription",
-									"type": "UTF8"
+									"type": "String"
 								},
 								"sink": {
 									"name": "Subscription",
@@ -299,7 +299,7 @@
 							{
 								"source": {
 									"name": "Eventinitiatedby",
-									"type": "UTF8"
+									"type": "String"
 								},
 								"sink": {
 									"name": "Eventinitiatedby",
@@ -309,7 +309,7 @@
 							{
 								"source": {
 									"name": "Resourcetype",
-									"type": "UTF8"
+									"type": "String"
 								},
 								"sink": {
 									"name": "Resourcetype",
@@ -319,7 +319,7 @@
 							{
 								"source": {
 									"name": "Resourcegroup",
-									"type": "UTF8"
+									"type": "String"
 								},
 								"sink": {
 									"name": "Resourcegroup",
@@ -329,7 +329,7 @@
 							{
 								"source": {
 									"name": "Resource",
-									"type": "UTF8"
+									"type": "String"
 								},
 								"sink": {
 									"name": "Resource",
