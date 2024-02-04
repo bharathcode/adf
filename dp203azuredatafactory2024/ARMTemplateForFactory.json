@@ -672,8 +672,7 @@
 							},
 							"sink": {
 								"type": "SqlDWSink",
-								"allowCopyCommand": true,
-								"copyCommandSettings": {}
+								"writeBehavior": "Insert"
 							},
 							"enableStaging": false,
 							"translator": {
@@ -789,7 +788,12 @@
 											"type": "String"
 										}
 									}
-								]
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
 							}
 						},
 						"inputs": [
