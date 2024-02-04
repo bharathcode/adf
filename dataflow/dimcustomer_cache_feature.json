@@ -251,7 +251,6 @@
 				"getmaxcustomerkey sink(validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     keys:['CustomerSK'],",
 				"     store: 'cache',",
 				"     format: 'inline',",
 				"     output: false,",
