@@ -214,7 +214,7 @@
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
 				"          CustomerSK,",
-				"          CustomerID = CustomerSK,",
+				"          CustomerID,",
 				"          CompanyName,",
 				"          SalesPerson",
 				"     )) ~> dimcustomer",
