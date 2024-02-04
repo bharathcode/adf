@@ -11,6 +11,9 @@
 		"log_csv_ADLS_Gen2_Source_accountKey": {
 			"value": ""
 		},
+		"dp203sqldatabase_connectionString": {
+			"value": ""
+		},
 		"log_csv_ADLS_Gen2_Source_properties_typeProperties_url": {
 			"value": "https://dp203storageaccount2024.dfs.core.windows.net/"
 		},

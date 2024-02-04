@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'log_csv_ADLS_Gen2_Source'"
 		},
+		"dp203sqldatabase_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'dp203sqldatabase'"
+		},
 		"log_csv_ADLS_Gen2_Source_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://dp203storageaccount2024.dfs.core.windows.net/"
@@ -51,6 +55,9 @@
 					},
 					"log_csv_ADLS_Gen2_Source_accountKey": {
 						"value": "[parameters('log_csv_ADLS_Gen2_Source_accountKey')]"
+					},
+					"dp203sqldatabase_connectionString": {
+						"value": "[parameters('dp203sqldatabase_connectionString')]"
 					},
 					"log_csv_ADLS_Gen2_Source_properties_typeProperties_url": {
 						"value": "[parameters('log_csv_ADLS_Gen2_Source_properties_typeProperties_url')]"
