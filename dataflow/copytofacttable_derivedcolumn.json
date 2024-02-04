@@ -34,6 +34,9 @@
 				},
 				{
 					"name": "selectcolumn"
+				},
+				{
+					"name": "totalamount"
 				}
 			],
 			"scriptLines": [
@@ -96,7 +99,8 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> selectcolumn",
-				"selectcolumn sink(allowSchemaDrift: true,",
+				"selectcolumn derive(totalamount =  multiply(OrderQty,UnitPrice)) ~> totalamount",
+				"totalamount sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          ProductID as integer,",
@@ -105,7 +109,8 @@
 				"          OrderQty as integer,",
 				"          UnitPrice as decimal(19,4),",
 				"          OrderDate as timestamp,",
-				"          TaxAmt as decimal(19,4)",
+				"          TaxAmt as decimal(19,4),",
+				"          totalamount as decimal(19,4)",
 				"     ),",
 				"     deletable:false,",
 				"     insertable:true,",
@@ -124,7 +129,8 @@
 				"          OrderQty,",
 				"          UnitPrice,",
 				"          OrderDate,",
-				"          TaxAmt",
+				"          TaxAmt,",
+				"          totalamount",
 				"     )) ~> factsalesTable"
 			]
 		}
