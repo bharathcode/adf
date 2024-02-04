@@ -61,6 +61,12 @@
 				},
 				{
 					"name": "surrogateKey1"
+				},
+				{
+					"name": "select2"
+				},
+				{
+					"name": "CustomerSK"
 				}
 			],
 			"scriptLines": [
@@ -153,9 +159,20 @@
 				"select1 keyGenerate(output(productSK as long),",
 				"     startAt: 1L,",
 				"     stepValue: 1L) ~> surrogateKey1",
-				"salesltcustomer sink(allowSchemaDrift: true,",
+				"salesltcustomer select(mapColumn(",
+				"          CustomerID,",
+				"          CompanyName,",
+				"          SalesPerson",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"select2 keyGenerate(output(CustomerSK as long),",
+				"     startAt: 1L,",
+				"     stepValue: 1L) ~> CustomerSK",
+				"CustomerSK sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
+				"          CustomerSK as integer,",
 				"          CustomerID as integer,",
 				"          CompanyName as string,",
 				"          SalesPerson as string",
@@ -171,6 +188,7 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
+				"          CustomerSK,",
 				"          CustomerID,",
 				"          CompanyName,",
 				"          SalesPerson",
