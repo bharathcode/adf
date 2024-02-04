@@ -31,6 +31,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "ProductCategory"
+				},
+				{
+					"dataset": {
+						"referenceName": "AzureSynapseAnalyticsTable6",
+						"type": "DatasetReference"
+					},
+					"name": "getmaxcustomerkey"
 				}
 			],
 			"sinks": [
@@ -47,6 +54,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "dimproduct"
+				},
+				{
+					"name": "CustomerSKCacheSink",
+					"rejectedDataLinkedService": {
+						"referenceName": "log_csv_ADLS_Gen2_Source",
+						"type": "LinkedServiceReference"
+					}
 				}
 			],
 			"transformations": [
@@ -67,6 +81,9 @@
 				},
 				{
 					"name": "CustomerSK"
+				},
+				{
+					"name": "CustomerSKupdated"
 				}
 			],
 			"scriptLines": [
@@ -134,6 +151,15 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> ProductCategory",
+				"source(output(",
+				"          CustomerSK as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'select max(CustomerSK) as CustomerSK from dimcustomer',",
+				"     format: 'query',",
+				"     staged: true) ~> getmaxcustomerkey",
 				"Product, ProductModel join(Product@ProductModelID == ProductModel@ProductModelID,",
 				"     joinType:'left',",
 				"     matchType:'exact',",
@@ -167,7 +193,8 @@
 				"select2 keyGenerate(output(CustomerSK as long),",
 				"     startAt: 1L,",
 				"     stepValue: 1L) ~> CustomerSK",
-				"CustomerSK sink(allowSchemaDrift: true,",
+				"CustomerSK derive(CustomerSK = CustomerSK + CustomerSKCacheSink#outputs()[1]) ~> CustomerSKupdated",
+				"CustomerSKupdated sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          CustomerSK as integer,",
@@ -187,7 +214,7 @@
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
 				"          CustomerSK,",
-				"          CustomerID,",
+				"          CustomerID = CustomerSK,",
 				"          CompanyName,",
 				"          SalesPerson",
 				"     )) ~> dimcustomer",
@@ -220,7 +247,18 @@
 				"          ProductName,",
 				"          ProductModelName,",
 				"          ProductCategoryName",
-				"     )) ~> dimproduct"
+				"     )) ~> dimproduct",
+				"getmaxcustomerkey sink(validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     keys:['CustomerSK'],",
+				"     store: 'cache',",
+				"     format: 'inline',",
+				"     output: false,",
+				"     saveOrder: 1,",
+				"     mapColumn(",
+				"          CustomerSK",
+				"     )) ~> CustomerSKCacheSink"
 			]
 		}
 	}
