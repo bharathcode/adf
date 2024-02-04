@@ -753,7 +753,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "Copy data1",
+						"name": "convert_csv_parquet_file",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -939,11 +939,11 @@
 						]
 					},
 					{
-						"name": "Copy data2",
+						"name": "copy_to_ADLS_Gen2",
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Copy data1",
+								"activity": "convert_csv_parquet_file",
 								"dependencyConditions": [
 									"Succeeded"
 								]
