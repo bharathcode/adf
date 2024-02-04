@@ -13,24 +13,58 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/dimproduct')]",
+			"name": "[concat(parameters('factoryName'), '/product_sqldatabase')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
+					"referenceName": "dp203sqldatabase",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
-				"type": "AzureSqlDWTable",
+				"type": "AzureSqlTable",
 				"schema": [
 					{
-						"name": "productSK",
+						"name": "ProductID",
 						"type": "int",
 						"precision": 10
 					},
 					{
-						"name": "ProductID",
+						"name": "Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ProductNumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Color",
+						"type": "nvarchar"
+					},
+					{
+						"name": "StandardCost",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "ListPrice",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "Size",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Weight",
+						"type": "decimal",
+						"precision": 8,
+						"scale": 2
+					},
+					{
+						"name": "ProductCategoryID",
 						"type": "int",
 						"precision": 10
 					},
@@ -40,26 +74,243 @@
 						"precision": 10
 					},
 					{
-						"name": "ProductcategoryID",
+						"name": "SellStartDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "SellEndDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "DiscontinuedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "ThumbNailPhoto",
+						"type": "varbinary"
+					},
+					{
+						"name": "ThumbnailPhotoFileName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "rowguid",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "ModifiedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "SalesLT",
+					"table": "Product"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/salesorderDetail')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dp203sqldatabase",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "SalesOrderID",
 						"type": "int",
 						"precision": 10
 					},
 					{
-						"name": "ProductName",
-						"type": "nvarchar"
+						"name": "SalesOrderDetailID",
+						"type": "int",
+						"precision": 10
 					},
 					{
-						"name": "ProductModelName",
-						"type": "nvarchar"
+						"name": "OrderQty",
+						"type": "smallint",
+						"precision": 5
 					},
 					{
-						"name": "ProductCategoryName",
-						"type": "nvarchar"
+						"name": "ProductID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "UnitPrice",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "UnitPriceDiscount",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "LineTotal",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 6
+					},
+					{
+						"name": "rowguid",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "ModifiedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
 					}
 				],
 				"typeProperties": {
-					"schema": "dbo",
-					"table": "DimProduct"
+					"schema": "SalesLT",
+					"table": "SalesOrderDetail"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/salesorderHeader')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dp203sqldatabase",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "SalesOrderID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "RevisionNumber",
+						"type": "tinyint",
+						"precision": 3
+					},
+					{
+						"name": "OrderDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "DueDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "ShipDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Status",
+						"type": "tinyint",
+						"precision": 3
+					},
+					{
+						"name": "OnlineOrderFlag",
+						"type": "bit"
+					},
+					{
+						"name": "SalesOrderNumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PurchaseOrderNumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AccountNumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CustomerID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ShipToAddressID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "BillToAddressID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ShipMethod",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CreditCardApprovalCode",
+						"type": "varchar"
+					},
+					{
+						"name": "SubTotal",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "TaxAmt",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "Freight",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "TotalDue",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "Comment",
+						"type": "nvarchar"
+					},
+					{
+						"name": "rowguid",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "ModifiedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "SalesLT",
+					"table": "SalesOrderHeader"
 				}
 			},
 			"dependsOn": []
@@ -2264,7 +2515,10 @@
 					]
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/salesorderDetail')]",
+				"[concat(variables('factoryId'), '/datasets/salesorderHeader')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/copytofacttable_derivedcolumn')]",
@@ -2405,7 +2659,10 @@
 					]
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/salesorderDetail')]",
+				"[concat(variables('factoryId'), '/datasets/salesorderHeader')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/dimcustomer_cache_feature')]",
@@ -2700,7 +2957,7 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/dimproduct')]"
+				"[concat(variables('factoryId'), '/datasets/product_sqldatabase')]"
 			]
 		},
 		{
@@ -2896,7 +3153,9 @@
 					]
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/product_sqldatabase')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/dimcustomer_dimproduct_surrogatekey')]",
@@ -3128,7 +3387,148 @@
 					]
 				}
 			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/product_sqldatabase')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/logparquetfile_filter')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Parquet1",
+								"type": "DatasetReference"
+							},
+							"name": "logparquet"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "AzureSynapseAnalyticsTable7",
+								"type": "DatasetReference"
+							},
+							"name": "logparquettable"
+						}
+					],
+					"transformations": [
+						{
+							"name": "filternullrows"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          Correlationid as string,",
+						"          Operationname as string,",
+						"          Status as string,",
+						"          Eventcategory as string,",
+						"          Level as string,",
+						"          Time as timestamp,",
+						"          Subscription as string,",
+						"          Eventinitiatedby as string,",
+						"          Resourcetype as string,",
+						"          Resourcegroup as string,",
+						"          Resource as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false,",
+						"     format: 'parquet') ~> logparquet",
+						"logparquet filter(!(isNull({Resourcegroup}))) ~> filternullrows",
+						"filternullrows sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          Correlationid as string,",
+						"          Operationname as string,",
+						"          Status as string,",
+						"          Eventcategory as string,",
+						"          Level as string,",
+						"          Time as timestamp,",
+						"          Subscription as string,",
+						"          Eventinitiatedby as string,",
+						"          Resourcetype as string,",
+						"          Resourcegroup as string,",
+						"          Resource as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     staged: true,",
+						"     allowCopyCommand: true,",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> logparquettable"
+					]
+				}
+			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Dimcustomer_Cache_feature')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "dimcustomer_Cache",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dimcustomer_cache_feature",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"salesltcustomer": {},
+									"Product": {},
+									"ProductModel": {},
+									"ProductCategory": {},
+									"getmaxcustomerkey": {},
+									"dimproducttablerecordsexisting": {},
+									"dimcustomer": {},
+									"dimproduct": {},
+									"CustomerSKCacheSink": {}
+								}
+							},
+							"staging": {
+								"linkedService": {
+									"referenceName": "log_csv_ADLS_Gen2_Source",
+									"type": "LinkedServiceReference"
+								},
+								"folderPath": "staging"
+							},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine",
+							"sourceStagingConcurrency": 1
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dimcustomer_cache_feature')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/dimcustomer_dataflow')]",
@@ -3293,119 +3693,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/copytofacttable')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/workflow_factsales_derivedcolumn')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "factsales_derivedcolumn",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "copytofacttable_derivedcolumn",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"salesorderdetailtable": {},
-									"Salesorder": {},
-									"factsalesTable": {}
-								}
-							},
-							"staging": {
-								"linkedService": {
-									"referenceName": "log_csv_ADLS_Gen2_Source",
-									"type": "LinkedServiceReference"
-								},
-								"folderPath": "staging"
-							},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/copytofacttable_derivedcolumn')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Dimcustomer_Cache_feature')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "dimcustomer_Cache",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "dimcustomer_cache_feature",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"salesltcustomer": {},
-									"Product": {},
-									"ProductModel": {},
-									"ProductCategory": {},
-									"getmaxcustomerkey": {},
-									"dimproducttablerecordsexisting": {},
-									"dimcustomer": {},
-									"dimproduct": {},
-									"CustomerSKCacheSink": {}
-								}
-							},
-							"staging": {
-								"linkedService": {
-									"referenceName": "log_csv_ADLS_Gen2_Source",
-									"type": "LinkedServiceReference"
-								},
-								"folderPath": "staging"
-							},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine",
-							"sourceStagingConcurrency": 1
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/dimcustomer_cache_feature')]"
 			]
 		}
 	]

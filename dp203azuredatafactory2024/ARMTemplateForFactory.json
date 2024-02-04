@@ -244,6 +244,67 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Dimcustomer_Cache_feature')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "dimcustomer_Cache",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dimcustomer_cache_feature",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"salesltcustomer": {},
+									"Product": {},
+									"ProductModel": {},
+									"ProductCategory": {},
+									"getmaxcustomerkey": {},
+									"dimproducttablerecordsexisting": {},
+									"dimcustomer": {},
+									"dimproduct": {},
+									"CustomerSKCacheSink": {}
+								}
+							},
+							"staging": {
+								"linkedService": {
+									"referenceName": "log_csv_ADLS_Gen2_Source",
+									"type": "LinkedServiceReference"
+								},
+								"folderPath": "staging"
+							},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine",
+							"sourceStagingConcurrency": 1
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dimcustomer_cache_feature')]",
+				"[concat(variables('factoryId'), '/linkedServices/log_csv_ADLS_Gen2_Source')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/convert_csv_parquet')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -2667,6 +2728,114 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureSynapseAnalyticsTable6')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlDWTable",
+				"schema": [
+					{
+						"name": "CustomerSK",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CustomerID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CompanyName",
+						"type": "varchar"
+					},
+					{
+						"name": "SalesPerson",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "DimCustomer"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSynapseAnalytics_log_csv_dedicated_Destination')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSynapseAnalyticsTable7')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlDWTable",
+				"schema": [
+					{
+						"name": "Correlationid",
+						"type": "varchar"
+					},
+					{
+						"name": "Operationname",
+						"type": "varchar"
+					},
+					{
+						"name": "Status",
+						"type": "varchar"
+					},
+					{
+						"name": "Eventcategory",
+						"type": "varchar"
+					},
+					{
+						"name": "Level",
+						"type": "varchar"
+					},
+					{
+						"name": "Time",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Subscription",
+						"type": "varchar"
+					},
+					{
+						"name": "Eventinitiatedby",
+						"type": "varchar"
+					},
+					{
+						"name": "Resourcetype",
+						"type": "varchar"
+					},
+					{
+						"name": "Resourcegroup",
+						"type": "varchar"
+					},
+					{
+						"name": "Resource",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "log_parquet_dedicated"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSynapseAnalytics_log_csv_dedicated_Destination')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DelimitedText1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -2816,6 +2985,76 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureSynapseAnalytics_log_csv_dedicated_Destination')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Parquet1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "log_csv_ADLS_Gen2_Source",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Log.parquet",
+						"fileSystem": "parquet"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "Correlationid",
+						"type": "UTF8"
+					},
+					{
+						"name": "Operationname",
+						"type": "UTF8"
+					},
+					{
+						"name": "Status",
+						"type": "UTF8"
+					},
+					{
+						"name": "Eventcategory",
+						"type": "UTF8"
+					},
+					{
+						"name": "Level",
+						"type": "UTF8"
+					},
+					{
+						"name": "Time",
+						"type": "INT96"
+					},
+					{
+						"name": "Subscription",
+						"type": "UTF8"
+					},
+					{
+						"name": "Eventinitiatedby",
+						"type": "UTF8"
+					},
+					{
+						"name": "Resourcetype",
+						"type": "UTF8"
+					},
+					{
+						"name": "Resourcegroup",
+						"type": "UTF8"
+					},
+					{
+						"name": "Resource",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/log_csv_ADLS_Gen2_Source')]"
 			]
 		},
 		{
@@ -3065,6 +3304,60 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/dp203sqldatabase')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dimproduct')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlDWTable",
+				"schema": [
+					{
+						"name": "productSK",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ProductID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ProductModelID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ProductcategoryID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ProductName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ProductModelName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ProductCategoryName",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "DimProduct"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSynapseAnalytics_log_csv_dedicated_Destination')]"
 			]
 		},
 		{
@@ -4505,13 +4798,95 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Dimcustomer_Cache_feature')]",
+			"name": "[concat(parameters('factoryName'), '/logparquetfile_filter')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Parquet1",
+								"type": "DatasetReference"
+							},
+							"name": "logparquet"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "AzureSynapseAnalyticsTable7",
+								"type": "DatasetReference"
+							},
+							"name": "logparquettable"
+						}
+					],
+					"transformations": [
+						{
+							"name": "filternullrows"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          Correlationid as string,",
+						"          Operationname as string,",
+						"          Status as string,",
+						"          Eventcategory as string,",
+						"          Level as string,",
+						"          Time as timestamp,",
+						"          Subscription as string,",
+						"          Eventinitiatedby as string,",
+						"          Resourcetype as string,",
+						"          Resourcegroup as string,",
+						"          Resource as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false,",
+						"     format: 'parquet') ~> logparquet",
+						"logparquet filter(!(isNull({Resourcegroup}))) ~> filternullrows",
+						"filternullrows sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          Correlationid as string,",
+						"          Operationname as string,",
+						"          Status as string,",
+						"          Eventcategory as string,",
+						"          Level as string,",
+						"          Time as timestamp,",
+						"          Subscription as string,",
+						"          Eventinitiatedby as string,",
+						"          Resourcetype as string,",
+						"          Resourcegroup as string,",
+						"          Resource as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     staged: true,",
+						"     allowCopyCommand: true,",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> logparquettable"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Parquet1')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSynapseAnalyticsTable7')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/logparquet_filter')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "dimcustomer_Cache",
+						"name": "logparquet_filter",
 						"type": "ExecuteDataFlow",
 						"dependsOn": [],
 						"policy": {
@@ -4524,19 +4899,12 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "dimcustomer_cache_feature",
+								"referenceName": "logparquetfile_filter",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
-									"salesltcustomer": {},
-									"Product": {},
-									"ProductModel": {},
-									"ProductCategory": {},
-									"getmaxcustomerkey": {},
-									"dimproducttablerecordsexisting": {},
-									"dimcustomer": {},
-									"dimproduct": {},
-									"CustomerSKCacheSink": {}
+									"logparquet": {},
+									"logparquettable": {}
 								}
 							},
 							"staging": {
@@ -4550,8 +4918,7 @@
 								"coreCount": 8,
 								"computeType": "General"
 							},
-							"traceLevel": "Fine",
-							"sourceStagingConcurrency": 1
+							"traceLevel": "Fine"
 						}
 					}
 				],
@@ -4561,102 +4928,8 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/dimcustomer_cache_feature')]",
+				"[concat(variables('factoryId'), '/dataflows/logparquetfile_filter')]",
 				"[concat(variables('factoryId'), '/linkedServices/log_csv_ADLS_Gen2_Source')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSynapseAnalyticsTable6')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlDWTable",
-				"schema": [
-					{
-						"name": "CustomerSK",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "CustomerID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "CompanyName",
-						"type": "varchar"
-					},
-					{
-						"name": "SalesPerson",
-						"type": "varchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "DimCustomer"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSynapseAnalytics_log_csv_dedicated_Destination')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/dimproduct')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlDWTable",
-				"schema": [
-					{
-						"name": "productSK",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "ProductID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "ProductModelID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "ProductcategoryID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "ProductName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ProductModelName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ProductCategoryName",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "DimProduct"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSynapseAnalytics_log_csv_dedicated_Destination')]"
 			]
 		}
 	]
