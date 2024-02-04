@@ -545,7 +545,7 @@
 									{
 										"source": {
 											"name": "Time",
-											"type": "String",
+											"type": "DateTime",
 											"physicalType": "String"
 										},
 										"sink": {
