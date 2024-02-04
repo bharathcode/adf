@@ -19,6 +19,13 @@
 						"referenceName": "copytofacttable",
 						"type": "DataFlowReference"
 					},
+					"staging": {
+						"linkedService": {
+							"referenceName": "log_csv_ADLS_Gen2_Source",
+							"type": "LinkedServiceReference"
+						},
+						"folderPath": "staging"
+					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
