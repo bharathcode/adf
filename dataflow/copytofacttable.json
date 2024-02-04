@@ -1,0 +1,63 @@
+{
+	"name": "copytofacttable",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"name": "salesorderdetailtable"
+				},
+				{
+					"dataset": {
+						"referenceName": "salesorderHeader",
+						"type": "DatasetReference"
+					},
+					"name": "Salesorder"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "join1"
+				}
+			],
+			"scriptLines": [
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false) ~> salesorderdetailtable",
+				"source(output(",
+				"          SalesOrderID as integer,",
+				"          RevisionNumber as integer,",
+				"          OrderDate as timestamp,",
+				"          DueDate as timestamp,",
+				"          ShipDate as timestamp,",
+				"          Status as integer,",
+				"          OnlineOrderFlag as boolean,",
+				"          SalesOrderNumber as string,",
+				"          PurchaseOrderNumber as string,",
+				"          AccountNumber as string,",
+				"          CustomerID as integer,",
+				"          ShipToAddressID as integer,",
+				"          BillToAddressID as integer,",
+				"          ShipMethod as string,",
+				"          CreditCardApprovalCode as string,",
+				"          SubTotal as decimal(19,4),",
+				"          TaxAmt as decimal(19,4),",
+				"          Freight as decimal(19,4),",
+				"          TotalDue as decimal(19,4),",
+				"          Comment as string,",
+				"          rowguid as string,",
+				"          ModifiedDate as timestamp",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> Salesorder",
+				"salesorderdetailtable, Salesorder join(ERROR_FUNCTION('') == SalesOrderID,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1"
+			]
+		}
+	}
+}
