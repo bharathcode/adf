@@ -1,5 +1,5 @@
 {
-	"name": "convert_csv_parquet_then_copy_to_dedicate_SQL_bulkinsert",
+	"name": "convert_csv_parquet_then_copy_to_dedicate_SQL_using_polybase",
 	"properties": {
 		"activities": [
 			{
@@ -220,7 +220,7 @@
 					},
 					"sink": {
 						"type": "SqlDWSink",
-						"writeBehavior": "Insert"
+						"allowCopyCommand": true
 					},
 					"enableStaging": false,
 					"translator": {
@@ -336,12 +336,7 @@
 									"type": "String"
 								}
 							}
-						],
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
+						]
 					}
 				},
 				"inputs": [
