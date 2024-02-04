@@ -38,6 +38,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "getmaxcustomerkey"
+				},
+				{
+					"dataset": {
+						"referenceName": "dimproduct",
+						"type": "DatasetReference"
+					},
+					"name": "dimproducttablerecordsexisting"
 				}
 			],
 			"sinks": [
@@ -84,6 +91,9 @@
 				},
 				{
 					"name": "CustomerSKupdated"
+				},
+				{
+					"name": "dimproductcomparison"
 				}
 			],
 			"scriptLines": [
@@ -160,7 +170,21 @@
 				"     query: 'select max(CustomerSK) as CustomerSK from dimcustomer',",
 				"     format: 'query',",
 				"     staged: true) ~> getmaxcustomerkey",
-				"Product, ProductModel join(Product@ProductModelID == ProductModel@ProductModelID,",
+				"source(output(",
+				"          productSK as integer,",
+				"          ProductID as integer,",
+				"          ProductModelID as integer,",
+				"          ProductcategoryID as integer,",
+				"          ProductName as string,",
+				"          ProductModelName as string,",
+				"          ProductCategoryName as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table',",
+				"     staged: true) ~> dimproducttablerecordsexisting",
+				"dimproductcomparison, ProductModel join(Product@ProductModelID == ProductModel@ProductModelID,",
 				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
@@ -194,6 +218,9 @@
 				"     startAt: 1L,",
 				"     stepValue: 1L) ~> CustomerSK",
 				"CustomerSK derive(CustomerSK = CustomerSK + CustomerSKCacheSink#outputs()[1].CustomerSK) ~> CustomerSKupdated",
+				"Product, dimproducttablerecordsexisting exists(Product@ProductID == dimproducttablerecordsexisting@ProductID,",
+				"     negate:true,",
+				"     broadcast: 'auto')~> dimproductcomparison",
 				"CustomerSKupdated sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
