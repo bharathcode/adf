@@ -193,7 +193,7 @@
 				"select2 keyGenerate(output(CustomerSK as long),",
 				"     startAt: 1L,",
 				"     stepValue: 1L) ~> CustomerSK",
-				"CustomerSK derive(CustomerSK = CustomerSK + CustomerSKCacheSink#outputs()[1]) ~> CustomerSKupdated",
+				"CustomerSK derive(CustomerSK = CustomerSK + CustomerSKCacheSink#outputs()[1].CustomerSK) ~> CustomerSKupdated",
 				"CustomerSKupdated sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
