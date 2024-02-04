@@ -58,6 +58,9 @@
 				},
 				{
 					"name": "select1"
+				},
+				{
+					"name": "surrogateKey1"
 				}
 			],
 			"scriptLines": [
@@ -147,6 +150,9 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 keyGenerate(output(productSK as long),",
+				"     startAt: 1L,",
+				"     stepValue: 1L) ~> surrogateKey1",
 				"salesltcustomer sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -169,9 +175,10 @@
 				"          CompanyName,",
 				"          SalesPerson",
 				"     )) ~> dimcustomer",
-				"select1 sink(allowSchemaDrift: true,",
+				"surrogateKey1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
+				"          productSK as integer,",
 				"          ProductID as integer,",
 				"          ProductModelID as integer,",
 				"          ProductcategoryID as integer,",
@@ -190,12 +197,13 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
+				"          productSK,",
 				"          ProductID,",
-				"          ProductModelID = ProductModel@ProductModelID,",
-				"          ProductcategoryID = ProductCategory@ProductCategoryID,",
-				"          ProductName = Product@Name,",
-				"          ProductModelName = ProductModel@Name,",
-				"          ProductCategoryName = ProductCategory@Name",
+				"          ProductModelID,",
+				"          ProductcategoryID = ProductCategoryID,",
+				"          ProductName,",
+				"          ProductModelName,",
+				"          ProductCategoryName",
 				"     )) ~> dimproduct"
 			]
 		}
