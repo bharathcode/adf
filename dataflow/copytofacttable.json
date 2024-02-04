@@ -102,7 +102,16 @@
 				"     allowCopyCommand: true,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> factsalesTable"
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          ProductID,",
+				"          SalesOrderID = SalesOrderDetailID,",
+				"          CustomerID,",
+				"          OrderQty,",
+				"          UnitPrice,",
+				"          OrderDate,",
+				"          TaxAmt",
+				"     )) ~> factsalesTable"
 			]
 		}
 	}
