@@ -159,6 +159,7 @@
 				"join2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
+				"          productSK as integer,",
 				"          ProductID as integer,",
 				"          ProductModelID as integer,",
 				"          ProductcategoryID as integer,",
