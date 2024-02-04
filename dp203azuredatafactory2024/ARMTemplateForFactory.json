@@ -3801,6 +3801,13 @@
 								"type": "DatasetReference"
 							},
 							"name": "getmaxcustomerkey"
+						},
+						{
+							"dataset": {
+								"referenceName": "dimproduct",
+								"type": "DatasetReference"
+							},
+							"name": "dimproducttablerecordsexisting"
 						}
 					],
 					"sinks": [
@@ -3847,6 +3854,9 @@
 						},
 						{
 							"name": "CustomerSKupdated"
+						},
+						{
+							"name": "dimproductcomparison"
 						}
 					],
 					"scriptLines": [
@@ -3923,7 +3933,21 @@
 						"     query: 'select max(CustomerSK) as CustomerSK from dimcustomer',",
 						"     format: 'query',",
 						"     staged: true) ~> getmaxcustomerkey",
-						"Product, ProductModel join(Product@ProductModelID == ProductModel@ProductModelID,",
+						"source(output(",
+						"          productSK as integer,",
+						"          ProductID as integer,",
+						"          ProductModelID as integer,",
+						"          ProductcategoryID as integer,",
+						"          ProductName as string,",
+						"          ProductModelName as string,",
+						"          ProductCategoryName as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table',",
+						"     staged: true) ~> dimproducttablerecordsexisting",
+						"dimproductcomparison, ProductModel join(Product@ProductModelID == ProductModel@ProductModelID,",
 						"     joinType:'left',",
 						"     matchType:'exact',",
 						"     ignoreSpaces: false,",
@@ -3957,6 +3981,9 @@
 						"     startAt: 1L,",
 						"     stepValue: 1L) ~> CustomerSK",
 						"CustomerSK derive(CustomerSK = CustomerSK + CustomerSKCacheSink#outputs()[1].CustomerSK) ~> CustomerSKupdated",
+						"Product, dimproducttablerecordsexisting exists(Product@ProductID == dimproducttablerecordsexisting@ProductID,",
+						"     negate:true,",
+						"     broadcast: 'auto')~> dimproductcomparison",
 						"CustomerSKupdated sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
@@ -3977,7 +4004,7 @@
 						"     errorHandlingOption: 'stopOnFirstError',",
 						"     mapColumn(",
 						"          CustomerSK,",
-						"          CustomerID = CustomerSK,",
+						"          CustomerID,",
 						"          CompanyName,",
 						"          SalesPerson",
 						"     )) ~> dimcustomer",
@@ -4030,6 +4057,7 @@
 				"[concat(variables('factoryId'), '/datasets/ProductModel')]",
 				"[concat(variables('factoryId'), '/datasets/ProductCategory')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSynapseAnalyticsTable6')]",
+				"[concat(variables('factoryId'), '/datasets/dimproduct')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSynapseAnalyticsTable4')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSynapseAnalyticsTable5')]",
 				"[concat(variables('factoryId'), '/linkedServices/log_csv_ADLS_Gen2_Source')]"
@@ -4505,6 +4533,7 @@
 									"ProductModel": {},
 									"ProductCategory": {},
 									"getmaxcustomerkey": {},
+									"dimproducttablerecordsexisting": {},
 									"dimcustomer": {},
 									"dimproduct": {},
 									"CustomerSKCacheSink": {}
@@ -4521,7 +4550,8 @@
 								"coreCount": 8,
 								"computeType": "General"
 							},
-							"traceLevel": "Fine"
+							"traceLevel": "Fine",
+							"sourceStagingConcurrency": 1
 						}
 					}
 				],
@@ -4569,6 +4599,60 @@
 				"typeProperties": {
 					"schema": "dbo",
 					"table": "DimCustomer"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSynapseAnalytics_log_csv_dedicated_Destination')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dimproduct')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlDWTable",
+				"schema": [
+					{
+						"name": "productSK",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ProductID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ProductModelID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ProductcategoryID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ProductName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ProductModelName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ProductCategoryName",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "DimProduct"
 				}
 			},
 			"dependsOn": [
