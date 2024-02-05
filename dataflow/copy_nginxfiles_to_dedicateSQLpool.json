@@ -6,22 +6,81 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "ADLSgen2_logfiles",
+						"referenceName": "ADLSgen2_nginx_logfiles_data",
 						"type": "DatasetReference"
 					},
 					"name": "adlsgen2files"
 				}
 			],
-			"sinks": [],
-			"transformations": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AzureSynapseAnalyticsTable8",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "select1"
+				},
+				{
+					"name": "timecolumn"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
-				"          {127.0.0.1 - - [05/Feb/2024:07:37:03 +0000] \"GET / HTTP/1.1\" 200 615 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML} as string,",
-				"          { like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0\"} as string",
+				"          {_col0_} as string,",
+				"          {_col1_} as string,",
+				"          {_col2_} as string,",
+				"          {_col3_} as string,",
+				"          {_col4_} as string,",
+				"          {_col5_} as string,",
+				"          {_col6_} as short,",
+				"          {_col7_} as short,",
+				"          {_col8_} as string,",
+				"          {_col9_} as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> adlsgen2files"
+				"     ignoreNoFilesFound: false) ~> adlsgen2files",
+				"adlsgen2files select(mapColumn(",
+				"          Remote_addr = {_col0_},",
+				"          Time_local = {_col3_},",
+				"          Request = {_col5_},",
+				"          Status = {_col6_},",
+				"          Bytes = {_col7_}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 derive(Time_local = substring(Time_local,2,length(Time_local)-1)) ~> timecolumn",
+				"timecolumn sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          Remote_addr as string,",
+				"          Time_local as string,",
+				"          Request as string,",
+				"          Status as integer,",
+				"          Bytes as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     staged: true,",
+				"     allowCopyCommand: true,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          Remote_addr,",
+				"          Time_local,",
+				"          Request,",
+				"          Status,",
+				"          Bytes",
+				"     )) ~> sink1"
 			]
 		}
 	}
