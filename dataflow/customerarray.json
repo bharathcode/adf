@@ -12,8 +12,20 @@
 					"name": "customerarrayjson"
 				}
 			],
-			"sinks": [],
-			"transformations": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Customercourse_array_dedicateSQLPool",
+						"type": "DatasetReference"
+					},
+					"name": "customerpooldb"
+				}
+			],
+			"transformations": [
+				{
+					"name": "flattencourses"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          customerid as integer,",
@@ -24,7 +36,40 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
-				"     documentForm: 'documentPerLine') ~> customerarrayjson"
+				"     documentForm: 'documentPerLine') ~> customerarrayjson",
+				"customerarrayjson foldDown(unroll(courses, courses),",
+				"     mapColumn(",
+				"          courses = courses,",
+				"          customerid,",
+				"          customername,",
+				"          registered",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> flattencourses",
+				"flattencourses sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          CustomerID as integer,",
+				"          CustomerName as string,",
+				"          Registered as boolean,",
+				"          Courses as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     staged: true,",
+				"     allowCopyCommand: true,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          CustomerID = customerid,",
+				"          CustomerName = customername,",
+				"          Registered = registered,",
+				"          Courses = courses",
+				"     )) ~> customerpooldb"
 			]
 		}
 	}
