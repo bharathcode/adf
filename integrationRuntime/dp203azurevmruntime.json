@@ -1,0 +1,6 @@
+{
+	"name": "dp203azurevmruntime",
+	"properties": {
+		"type": "SelfHosted"
+	}
+}
