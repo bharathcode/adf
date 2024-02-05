@@ -1,0 +1,28 @@
+{
+	"name": "copy_nginxfiles_to_dedicateSQLpool",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ADLSgen2_logfiles",
+						"type": "DatasetReference"
+					},
+					"name": "adlsgen2files"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          {127.0.0.1 - - [05/Feb/2024:07:37:03 +0000] \"GET / HTTP/1.1\" 200 615 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML} as string,",
+				"          { like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0\"} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> adlsgen2files"
+			]
+		}
+	}
+}
