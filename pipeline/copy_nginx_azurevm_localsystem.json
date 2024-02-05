@@ -41,7 +41,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "Binary1",
+						"referenceName": "adlsgen2_nginx_logfiles",
 						"type": "DatasetReference"
 					}
 				]

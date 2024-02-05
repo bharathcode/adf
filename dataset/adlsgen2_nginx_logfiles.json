@@ -1,5 +1,5 @@
 {
-	"name": "Binary1",
+	"name": "adlsgen2_nginx_logfiles",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "log_csv_ADLS_Gen2_Source",
