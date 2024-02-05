@@ -15,6 +15,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"method": "GET",
 					"url": "https://dp203storageaccount2024.blob.core.windows.net/csv/customer/Customer01.csv"
 				}
 			}
