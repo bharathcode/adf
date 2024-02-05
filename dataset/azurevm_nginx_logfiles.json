@@ -1,5 +1,5 @@
 {
-	"name": "Binary2",
+	"name": "azurevm_nginx_logfiles",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "azurevm",
