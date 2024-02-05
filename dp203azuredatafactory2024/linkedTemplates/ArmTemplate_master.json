@@ -19,9 +19,21 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'log_csv_ADLS_Gen2_Source'"
 		},
+		"azurevm_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'azurevm'"
+		},
 		"log_csv_ADLS_Gen2_Source_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://dp203storageaccount2024.dfs.core.windows.net/"
+		},
+		"azurevm_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "D:\\nginx-1.24.0\\nginx-1.24.0\\logs"
+		},
+		"azurevm_properties_typeProperties_userId": {
+			"type": "string",
+			"defaultValue": "aaasadmin"
 		},
 		"containerUri": {
 			"type": "string",
@@ -79,6 +91,15 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"azurevm_password": {
+						"value": "[parameters('azurevm_password')]"
+					},
+					"azurevm_properties_typeProperties_host": {
+						"value": "[parameters('azurevm_properties_typeProperties_host')]"
+					},
+					"azurevm_properties_typeProperties_userId": {
+						"value": "[parameters('azurevm_properties_typeProperties_userId')]"
 					}
 				}
 			},

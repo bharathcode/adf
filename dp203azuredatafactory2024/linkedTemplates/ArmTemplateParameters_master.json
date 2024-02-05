@@ -14,8 +14,17 @@
 		"log_csv_ADLS_Gen2_Source_accountKey": {
 			"value": ""
 		},
+		"azurevm_password": {
+			"value": ""
+		},
 		"log_csv_ADLS_Gen2_Source_properties_typeProperties_url": {
 			"value": "https://dp203storageaccount2024.dfs.core.windows.net/"
+		},
+		"azurevm_properties_typeProperties_host": {
+			"value": "D:\\nginx-1.24.0\\nginx-1.24.0\\logs"
+		},
+		"azurevm_properties_typeProperties_userId": {
+			"value": "aaasadmin"
 		},
 		"containerUri": {
 			"value": ""
