@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSynapseAnalytics_log_csv_dedicated_Destination'"
 		},
+		"azurevm_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'azurevm'"
+		},
 		"dp203sqldatabase_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'dp203sqldatabase'"
@@ -19,14 +23,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'log_csv_ADLS_Gen2_Source'"
 		},
-		"azurevm_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'azurevm'"
-		},
-		"log_csv_ADLS_Gen2_Source_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://dp203storageaccount2024.dfs.core.windows.net/"
-		},
 		"azurevm_properties_typeProperties_host": {
 			"type": "string",
 			"defaultValue": "D:\\nginx-1.24.0\\nginx-1.24.0\\logs"
@@ -34,6 +30,10 @@
 		"azurevm_properties_typeProperties_userId": {
 			"type": "string",
 			"defaultValue": "aaasadmin"
+		},
+		"log_csv_ADLS_Gen2_Source_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://dp203storageaccount2024.dfs.core.windows.net/"
 		},
 		"containerUri": {
 			"type": "string",
