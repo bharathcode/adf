@@ -630,7 +630,7 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     ignoreNoFilesFound: false,",
-						"     documentForm: 'arrayOfDocuments') ~> customerarrayjson",
+						"     documentForm: 'singleDocument') ~> customerarrayjson",
 						"customerarrayjson foldDown(unroll(courses, courses),",
 						"     mapColumn(",
 						"          courses,",
