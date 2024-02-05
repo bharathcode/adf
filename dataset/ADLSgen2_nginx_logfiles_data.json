@@ -1,5 +1,5 @@
 {
-	"name": "ADLSgen2_logfiles",
+	"name": "ADLSgen2_nginx_logfiles_data",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "log_csv_ADLS_Gen2_Source",
@@ -19,7 +19,7 @@
 			},
 			"rowDelimiter": "\n",
 			"escapeChar": "\\",
-			"firstRowAsHeader": true,
+			"firstRowAsHeader": false,
 			"quoteChar": "\""
 		},
 		"schema": [
