@@ -1689,6 +1689,49 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "copytodedicatedSQLpool",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "copy_nginx_azurevm_localsystem",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "copy_nginxfiles_to_dedicateSQLpool",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"adlsgen2files": {},
+									"sink1": {}
+								}
+							},
+							"staging": {
+								"linkedService": {
+									"referenceName": "log_csv_ADLS_Gen2_Source",
+									"type": "LinkedServiceReference"
+								},
+								"folderPath": "staging"
+							},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
 					}
 				],
 				"policy": {
@@ -1697,7 +1740,8 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/azurevm_nginx_logfiles')]"
+				"[concat(variables('factoryId'), '/datasets/azurevm_nginx_logfiles')]",
+				"[concat(variables('factoryId'), '/dataflows/copy_nginxfiles_to_dedicateSQLpool')]"
 			]
 		},
 		{
