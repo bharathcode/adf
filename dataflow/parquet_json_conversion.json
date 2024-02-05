@@ -55,11 +55,13 @@
 				"          Resourcegroup as string,",
 				"          Resource as string",
 				"     ),",
+				"     partitionFileNames:['Log_json.json'],",
 				"     umask: 0022,",
 				"     preCommands: [],",
 				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1"
 			]
 		}
 	}
