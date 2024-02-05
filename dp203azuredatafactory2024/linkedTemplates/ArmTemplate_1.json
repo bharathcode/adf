@@ -25,6 +25,232 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/Parquet1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "log_csv_ADLS_Gen2_Source",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Log.parquet",
+						"fileSystem": "parquet"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "Correlationid",
+						"type": "UTF8"
+					},
+					{
+						"name": "Operationname",
+						"type": "UTF8"
+					},
+					{
+						"name": "Status",
+						"type": "UTF8"
+					},
+					{
+						"name": "Eventcategory",
+						"type": "UTF8"
+					},
+					{
+						"name": "Level",
+						"type": "UTF8"
+					},
+					{
+						"name": "Time",
+						"type": "INT96"
+					},
+					{
+						"name": "Subscription",
+						"type": "UTF8"
+					},
+					{
+						"name": "Eventinitiatedby",
+						"type": "UTF8"
+					},
+					{
+						"name": "Resourcetype",
+						"type": "UTF8"
+					},
+					{
+						"name": "Resourcegroup",
+						"type": "UTF8"
+					},
+					{
+						"name": "Resource",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ProductCategory')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dp203sqldatabase",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ProductCategoryID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ParentProductCategoryID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "rowguid",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "ModifiedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "SalesLT",
+					"table": "ProductCategory"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ProductModel')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dp203sqldatabase",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ProductModelID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CatalogDescription",
+						"type": "xml"
+					},
+					{
+						"name": "rowguid",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "ModifiedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "SalesLT",
+					"table": "ProductModel"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_y7e')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "log_csv_ADLS_Gen2_Source",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Log.csv",
+						"fileSystem": "csv"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Correlation id",
+						"type": "String"
+					},
+					{
+						"name": "Operation name",
+						"type": "String"
+					},
+					{
+						"name": "Status",
+						"type": "String"
+					},
+					{
+						"name": "Event category",
+						"type": "String"
+					},
+					{
+						"name": "Level",
+						"type": "String"
+					},
+					{
+						"name": "Time",
+						"type": "String"
+					},
+					{
+						"name": "Subscription",
+						"type": "String"
+					},
+					{
+						"name": "Event initiated by",
+						"type": "String"
+					},
+					{
+						"name": "Resource type",
+						"type": "String"
+					},
+					{
+						"name": "Resource group",
+						"type": "String"
+					},
+					{
+						"name": "Resource",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/adlsgen2_nginx_logfiles')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -778,153 +1004,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ADLSgen2_nginx_logfiles_data')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "log_csv_ADLS_Gen2_Source",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "access.log",
-						"fileSystem": "nginx"
-					},
-					"columnDelimiter": {
-						"value": " ",
-						"type": "Expression"
-					},
-					"rowDelimiter": "\n",
-					"escapeChar": "\\",
-					"firstRowAsHeader": false,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "127.0.0.1 - - [05/Feb/2024:07:37:03 +0000] \"GET / HTTP/1.1\" 200 615 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML",
-						"type": "String"
-					},
-					{
-						"name": " like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0\"",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSynapseAnalyticsTable8')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlDWTable",
-				"schema": [
-					{
-						"name": "Remote_addr",
-						"type": "varchar"
-					},
-					{
-						"name": "Time_local",
-						"type": "varchar"
-					},
-					{
-						"name": "Request",
-						"type": "varchar"
-					},
-					{
-						"name": "Status",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Bytes",
-						"type": "int",
-						"precision": 10
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "Serverlogs"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSynapseAnalyticsTable9')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlDWTable",
-				"schema": [
-					{
-						"name": "Correlationid",
-						"type": "varchar"
-					},
-					{
-						"name": "Operationname",
-						"type": "varchar"
-					},
-					{
-						"name": "Status",
-						"type": "varchar"
-					},
-					{
-						"name": "Eventcategory",
-						"type": "varchar"
-					},
-					{
-						"name": "Level",
-						"type": "varchar"
-					},
-					{
-						"name": "Time",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Subscription",
-						"type": "varchar"
-					},
-					{
-						"name": "Eventinitiatedby",
-						"type": "varchar"
-					},
-					{
-						"name": "Resourcetype",
-						"type": "varchar"
-					},
-					{
-						"name": "Resourcegroup",
-						"type": "varchar"
-					},
-					{
-						"name": "Resource",
-						"type": "varchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "log_parquet_dedicated_conditionalsplit"
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/CopyPipeline_y7e')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -1134,7 +1213,9 @@
 				},
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SourceDataset_y7e')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/convert_csv_parquet')]",
@@ -1335,6 +1416,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SourceDataset_y7e')]",
 				"[concat(variables('factoryId'), '/datasets/parquetfile_destination')]"
 			]
 		},
@@ -1726,6 +1808,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SourceDataset_y7e')]",
 				"[concat(variables('factoryId'), '/datasets/parquetfile_destination')]"
 			]
 		},
@@ -2101,388 +2184,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/parquetfile_destination')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/convert_csv_parquet_then_copy_to_dedicate_SQL_using_polybase')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "convert_csv_parquet_file",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
-							},
-							"sink": {
-								"type": "ParquetSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								},
-								"formatSettings": {
-									"type": "ParquetWriteSettings"
-								}
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "Correlation id",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Correlationid",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "Operation name",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Operationname",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "Status",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Status",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "Event category",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Eventcategory",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "Level",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Level",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "Time",
-											"type": "DateTime",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Time",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "Subscription",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Subscription",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "Event initiated by",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Eventinitiatedby",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "Resource type",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Resourcetype",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "Resource group",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Resourcegroup",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "Resource",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Resource",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									}
-								],
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "SourceDataset_y7e",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "parquetfile_destination",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "copy_to_ADLS_Gen2",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "convert_csv_parquet_file",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "ParquetSource",
-								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
-									"recursive": true,
-									"wildcardFileName": "*.parquet",
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "ParquetReadSettings"
-								}
-							},
-							"sink": {
-								"type": "SqlDWSink",
-								"allowPolyBase": true,
-								"polyBaseSettings": {
-									"rejectValue": 0,
-									"rejectType": "value",
-									"useTypeDefault": true
-								}
-							},
-							"enableStaging": true,
-							"stagingSettings": {
-								"linkedServiceName": {
-									"referenceName": "log_csv_ADLS_Gen2_Source",
-									"type": "LinkedServiceReference"
-								},
-								"path": "staging"
-							},
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "Correlationid",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Correlationid",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Operationname",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Operationname",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Status",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Status",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Eventcategory",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Eventcategory",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Level",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Level",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Time",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Time",
-											"type": "DateTime"
-										}
-									},
-									{
-										"source": {
-											"name": "Subscription",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Subscription",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Eventinitiatedby",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Eventinitiatedby",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Resourcetype",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Resourcetype",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Resourcegroup",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Resourcegroup",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Resource",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Resource",
-											"type": "String"
-										}
-									}
-								]
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "parquetfile_destination",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "AzureSynapseAnalyticsTable1",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SourceDataset_y7e')]",
 				"[concat(variables('factoryId'), '/datasets/parquetfile_destination')]"
 			]
 		}
