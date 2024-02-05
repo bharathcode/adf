@@ -73,7 +73,9 @@
 				"          CustomerID = customerid,",
 				"          CustomerName = customername,",
 				"          Registered = registered,",
-				"          Courses = courses",
+				"          Courses = courses,",
+				"          Mobile = mobile,",
+				"          City = city",
 				"     )) ~> customerpooldb"
 			]
 		}
