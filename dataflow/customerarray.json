@@ -36,7 +36,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
-				"     documentForm: 'documentPerLine') ~> customerarrayjson",
+				"     documentForm: 'arrayOfDocuments') ~> customerarrayjson",
 				"customerarrayjson foldDown(unroll(courses, courses),",
 				"     mapColumn(",
 				"          courses = courses,",
