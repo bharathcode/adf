@@ -2093,6 +2093,59 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/logparquet_filter')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "logparquet_filter",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "logparquetfile_filter",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"logparquet": {},
+									"logparquettable": {}
+								}
+							},
+							"staging": {
+								"linkedService": {
+									"referenceName": "log_csv_ADLS_Gen2_Source",
+									"type": "LinkedServiceReference"
+								},
+								"folderPath": "staging"
+							},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/logparquetfile_filter')]",
+				"[concat(variables('factoryId'), '/linkedServices/log_csv_ADLS_Gen2_Source')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/run_workflow_dimproduct_dimcustomer_surrogatekey')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -4880,13 +4933,145 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/logparquet_filter')]",
+			"name": "[concat(parameters('factoryName'), '/parquet_json_conversion')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Parquet1",
+								"type": "DatasetReference"
+							},
+							"name": "ADLSGen2Parquetfile"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Json1",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [],
+					"scriptLines": [
+						"source(output(",
+						"          Correlationid as string,",
+						"          Operationname as string,",
+						"          Status as string,",
+						"          Eventcategory as string,",
+						"          Level as string,",
+						"          Time as timestamp,",
+						"          Subscription as string,",
+						"          Eventinitiatedby as string,",
+						"          Resourcetype as string,",
+						"          Resourcegroup as string,",
+						"          Resource as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false,",
+						"     format: 'parquet') ~> ADLSGen2Parquetfile",
+						"ADLSGen2Parquetfile sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          Correlationid as string,",
+						"          Operationname as string,",
+						"          Status as string,",
+						"          Eventcategory as string,",
+						"          Level as string,",
+						"          Time as string,",
+						"          Subscription as string,",
+						"          Eventinitiatedby as string,",
+						"          Resourcetype as string,",
+						"          Resourcegroup as string,",
+						"          Resource as string",
+						"     ),",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Parquet1')]",
+				"[concat(variables('factoryId'), '/datasets/Json1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Json1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "log_csv_ADLS_Gen2_Source",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "json"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"Correlationid": {
+							"type": "string"
+						},
+						"Operationname": {
+							"type": "string"
+						},
+						"Status": {
+							"type": "string"
+						},
+						"Eventcategory": {
+							"type": "string"
+						},
+						"Level": {
+							"type": "string"
+						},
+						"Time": {
+							"type": "string"
+						},
+						"Subscription": {
+							"type": "string"
+						},
+						"Eventinitiatedby": {
+							"type": "string"
+						},
+						"Resourcetype": {
+							"type": "string"
+						},
+						"Resourcegroup": {
+							"type": "string"
+						},
+						"Resource": {
+							"type": "string"
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/log_csv_ADLS_Gen2_Source')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/parquet_json_conversion')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "logparquet_filter",
+						"name": "parquet_json_conversion",
 						"type": "ExecuteDataFlow",
 						"dependsOn": [],
 						"policy": {
@@ -4899,21 +5084,15 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "logparquetfile_filter",
+								"referenceName": "parquet_json_conversion",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
-									"logparquet": {},
-									"logparquettable": {}
+									"ADLSGen2Parquetfile": {},
+									"sink1": {}
 								}
 							},
-							"staging": {
-								"linkedService": {
-									"referenceName": "log_csv_ADLS_Gen2_Source",
-									"type": "LinkedServiceReference"
-								},
-								"folderPath": "staging"
-							},
+							"staging": {},
 							"compute": {
 								"coreCount": 8,
 								"computeType": "General"
@@ -4928,8 +5107,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/logparquetfile_filter')]",
-				"[concat(variables('factoryId'), '/linkedServices/log_csv_ADLS_Gen2_Source')]"
+				"[concat(variables('factoryId'), '/dataflows/parquet_json_conversion')]"
 			]
 		}
 	]
