@@ -1,0 +1,39 @@
+{
+	"name": "customerarr_json_ADLSGen2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "log_csv_ADLS_Gen2_Source",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "customer_arr.json",
+				"folderPath": "Customer",
+				"fileSystem": "json"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"customerid": {
+					"type": "integer"
+				},
+				"customername": {
+					"type": "string"
+				},
+				"registered": {
+					"type": "boolean"
+				},
+				"courses": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			}
+		}
+	}
+}
