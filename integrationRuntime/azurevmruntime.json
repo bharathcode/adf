@@ -1,0 +1,6 @@
+{
+	"name": "azurevmruntime",
+	"properties": {
+		"type": "SelfHosted"
+	}
+}
