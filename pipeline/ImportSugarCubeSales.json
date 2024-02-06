@@ -35,7 +35,67 @@
 						"sqlWriterUseTableLock": false,
 						"disableMetricsCollection": false
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['Month']"
+								},
+								"sink": {
+									"name": "SalesMonth",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Company']"
+								},
+								"sink": {
+									"name": "Retailer",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Sales'][0]['Product']"
+								},
+								"sink": {
+									"name": "Product",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Sales'][0]['ManufacturerProductCode']"
+								},
+								"sink": {
+									"name": "ManufacturerProductCode",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Sales'][0]['Units']"
+								},
+								"sink": {
+									"name": "UnitsSold",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Sales'][0]['Value']"
+								},
+								"sink": {
+									"name": "SalesValueUSD",
+									"type": "Decimal"
+								}
+							}
+						],
+						"collectionReference": ""
+					}
 				},
 				"inputs": [
 					{
