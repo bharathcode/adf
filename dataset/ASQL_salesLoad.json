@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "RichardSwinbank_book"
+			"name": "RichardSwinbank_book/Chapter3"
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
