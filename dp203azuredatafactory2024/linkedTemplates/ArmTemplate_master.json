@@ -91,15 +91,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"azurevm_password": {
-						"value": "[parameters('azurevm_password')]"
-					},
-					"azurevm_properties_typeProperties_host": {
-						"value": "[parameters('azurevm_properties_typeProperties_host')]"
-					},
-					"azurevm_properties_typeProperties_userId": {
-						"value": "[parameters('azurevm_properties_typeProperties_userId')]"
 					}
 				}
 			},
@@ -120,6 +111,15 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"azurevm_password": {
+						"value": "[parameters('azurevm_password')]"
+					},
+					"azurevm_properties_typeProperties_host": {
+						"value": "[parameters('azurevm_properties_typeProperties_host')]"
+					},
+					"azurevm_properties_typeProperties_userId": {
+						"value": "[parameters('azurevm_properties_typeProperties_userId')]"
 					}
 				}
 			},

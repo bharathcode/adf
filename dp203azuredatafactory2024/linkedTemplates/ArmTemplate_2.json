@@ -6,6 +6,18 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "dp203azuredatafactory2024"
+		},
+		"azurevm_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'azurevm'"
+		},
+		"azurevm_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "D:\\nginx-1.24.0\\nginx-1.24.0\\logs"
+		},
+		"azurevm_properties_typeProperties_userId": {
+			"type": "string",
+			"defaultValue": "aaasadmin"
 		}
 	},
 	"variables": {
@@ -13,55 +25,16 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/RunningStoredprocedure')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Stored procedure1",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[GetCustomerDetails]",
-							"storedProcedureParameters": {
-								"CustomerID": {
-									"value": "277"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
-							"type": "LinkedServiceReference"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSynapseAnalyticsTable11')]",
+			"name": "[concat(parameters('factoryName'), '/product_sqldatabase')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
+					"referenceName": "dp203sqldatabase",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
-				"type": "AzureSqlDWTable",
+				"type": "AzureSqlTable",
 				"schema": [
 					{
 						"name": "ProductID",
@@ -152,6 +125,226 @@
 				"typeProperties": {
 					"schema": "SalesLT",
 					"table": "Product"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/salesorderDetail')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dp203sqldatabase",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "SalesOrderID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "SalesOrderDetailID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "OrderQty",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "ProductID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "UnitPrice",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "UnitPriceDiscount",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "LineTotal",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 6
+					},
+					{
+						"name": "rowguid",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "ModifiedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "SalesLT",
+					"table": "SalesOrderDetail"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/salesorderHeader')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dp203sqldatabase",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "SalesOrderID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "RevisionNumber",
+						"type": "tinyint",
+						"precision": 3
+					},
+					{
+						"name": "OrderDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "DueDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "ShipDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Status",
+						"type": "tinyint",
+						"precision": 3
+					},
+					{
+						"name": "OnlineOrderFlag",
+						"type": "bit"
+					},
+					{
+						"name": "SalesOrderNumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PurchaseOrderNumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AccountNumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CustomerID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ShipToAddressID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "BillToAddressID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ShipMethod",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CreditCardApprovalCode",
+						"type": "varchar"
+					},
+					{
+						"name": "SubTotal",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "TaxAmt",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "Freight",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "TotalDue",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "Comment",
+						"type": "nvarchar"
+					},
+					{
+						"name": "rowguid",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "ModifiedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "SalesLT",
+					"table": "SalesOrderHeader"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/azurevm')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "FileServer",
+				"typeProperties": {
+					"host": "[parameters('azurevm_properties_typeProperties_host')]",
+					"userId": "[parameters('azurevm_properties_typeProperties_userId')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('azurevm_password')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "dp203azurevmruntime",
+					"type": "IntegrationRuntimeReference"
 				}
 			},
 			"dependsOn": []
@@ -364,7 +557,8 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2024-02-04T08:59:23Z"
 			},
 			"dependsOn": []
 		},
@@ -409,7 +603,111 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2024-02-06T00:41:54Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LookupActivity')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "storedprocedure",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlDWSource",
+								"sqlReaderStoredProcedureName": "[[dbo].[GetCustomerDetails]",
+								"storedProcedureParameters": {
+									"CustomerID": {
+										"type": "Int32",
+										"value": "277"
+									}
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "AzureSynapseAnalyticsTable11",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Companyname",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "storedprocedure",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "CompanyName",
+							"value": {
+								"value": "@activity('storedprocedure').output.firstRow.CompanyName",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "SalesPerson",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "storedprocedure",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "SalesPerson",
+							"value": {
+								"value": "@activity('storedprocedure').output.firstRow.SalesPerson",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"variables": {
+					"CompanyName": {
+						"type": "String"
+					},
+					"SalesPerson": {
+						"type": "String"
+					}
+				},
+				"annotations": [],
+				"lastPublishTime": "2024-02-06T01:36:32Z"
 			},
 			"dependsOn": []
 		},
@@ -609,7 +907,8 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2024-02-04T09:14:13Z"
 			},
 			"dependsOn": []
 		},
@@ -998,7 +1297,8 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2024-02-04T11:10:55Z"
 			},
 			"dependsOn": []
 		},
@@ -1371,7 +1671,8 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2024-02-04T11:23:12Z"
 			},
 			"dependsOn": []
 		},
@@ -1751,7 +2052,8 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2024-02-04T11:27:55Z"
 			},
 			"dependsOn": []
 		},
@@ -2120,6 +2422,80 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
+				"annotations": [],
+				"lastPublishTime": "2024-02-04T11:19:07Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/copyzipfiles_unzipthem')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy_nhm",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "landing//azure-data-factory-by-example-main.zip"
+							},
+							{
+								"name": "Destination",
+								"value": "sampledata//"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "BinarySource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "BinaryReadSettings",
+									"compressionProperties": {
+										"type": "ZipDeflateReadSettings",
+										"preserveZipFileNameAsFolder": false
+									}
+								}
+							},
+							"sink": {
+								"type": "BinarySink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "SourceDataset_nhm",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DestinationDataset_nhm",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
 				"annotations": []
 			},
 			"dependsOn": []
@@ -2288,7 +2664,8 @@
 						"type": "String"
 					}
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2024-02-06T01:08:07Z"
 			},
 			"dependsOn": []
 		},
@@ -2445,7 +2822,8 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2024-02-04T10:39:44Z"
 			},
 			"dependsOn": []
 		},
@@ -2467,7 +2845,9 @@
 					}
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/azurevm')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/copy_nginxfiles_to_dedicateSQLpool')]",
@@ -2679,7 +3059,10 @@
 					]
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/salesorderDetail')]",
+				"[concat(variables('factoryId'), '/datasets/salesorderHeader')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/copytofacttable_derivedcolumn')]",
@@ -2820,7 +3203,10 @@
 					]
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/salesorderDetail')]",
+				"[concat(variables('factoryId'), '/datasets/salesorderHeader')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/customeraobject_to_dedicatesqlpool')]",
@@ -2903,806 +3289,6 @@
 						"          Mobile = mobile,",
 						"          City = city",
 						"     )) ~> customerpooldb"
-					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/customerarray')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "customerarr_json_ADLSGen2",
-								"type": "DatasetReference"
-							},
-							"name": "customerarrayjson"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "Customercourse_array_dedicateSQLPool",
-								"type": "DatasetReference"
-							},
-							"name": "customerpooldb"
-						}
-					],
-					"transformations": [
-						{
-							"name": "flattencourses"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          customerid as integer,",
-						"          customername as string,",
-						"          registered as boolean,",
-						"          courses as string[]",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false,",
-						"     documentForm: 'arrayOfDocuments') ~> customerarrayjson",
-						"customerarrayjson foldDown(unroll(courses, courses),",
-						"     mapColumn(",
-						"          courses,",
-						"          customerid,",
-						"          customername,",
-						"          registered",
-						"     ),",
-						"     skipDuplicateMapInputs: false,",
-						"     skipDuplicateMapOutputs: false) ~> flattencourses",
-						"flattencourses sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          CustomerID as integer,",
-						"          CustomerName as string,",
-						"          Registered as boolean,",
-						"          Courses as string",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     staged: true,",
-						"     allowCopyCommand: true,",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          CustomerID = customerid,",
-						"          CustomerName = customername,",
-						"          Registered = registered,",
-						"          Courses = courses",
-						"     )) ~> customerpooldb"
-					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/dimcustomer_cache_feature')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "DelimitedText1",
-								"type": "DatasetReference"
-							},
-							"name": "salesltcustomer"
-						},
-						{
-							"dataset": {
-								"referenceName": "product_sqldatabase",
-								"type": "DatasetReference"
-							},
-							"name": "Product"
-						},
-						{
-							"dataset": {
-								"referenceName": "ProductModel",
-								"type": "DatasetReference"
-							},
-							"name": "ProductModel"
-						},
-						{
-							"dataset": {
-								"referenceName": "ProductCategory",
-								"type": "DatasetReference"
-							},
-							"name": "ProductCategory"
-						},
-						{
-							"dataset": {
-								"referenceName": "AzureSynapseAnalyticsTable6",
-								"type": "DatasetReference"
-							},
-							"name": "getmaxcustomerkey"
-						},
-						{
-							"dataset": {
-								"referenceName": "dimproduct",
-								"type": "DatasetReference"
-							},
-							"name": "dimproducttablerecordsexisting"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "AzureSynapseAnalyticsTable4",
-								"type": "DatasetReference"
-							},
-							"name": "dimcustomer"
-						},
-						{
-							"dataset": {
-								"referenceName": "AzureSynapseAnalyticsTable5",
-								"type": "DatasetReference"
-							},
-							"name": "dimproduct"
-						},
-						{
-							"name": "CustomerSKCacheSink",
-							"rejectedDataLinkedService": {
-								"referenceName": "log_csv_ADLS_Gen2_Source",
-								"type": "LinkedServiceReference"
-							}
-						}
-					],
-					"transformations": [
-						{
-							"name": "productandproductmodel"
-						},
-						{
-							"name": "join2"
-						},
-						{
-							"name": "select1"
-						},
-						{
-							"name": "surrogateKey1"
-						},
-						{
-							"name": "select2"
-						},
-						{
-							"name": "CustomerSK"
-						},
-						{
-							"name": "CustomerSKupdated"
-						},
-						{
-							"name": "dimproductcomparison"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          CustomerID as string,",
-						"          NameStyle as string,",
-						"          Title as string,",
-						"          FirstName as string,",
-						"          MiddleName as string,",
-						"          LastName as string,",
-						"          Suffix as string,",
-						"          CompanyName as string,",
-						"          SalesPerson as string,",
-						"          EmailAddress as string,",
-						"          Phone as string,",
-						"          PasswordHash as string,",
-						"          PasswordSalt as string,",
-						"          rowguid as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false) ~> salesltcustomer",
-						"source(output(",
-						"          ProductID as integer,",
-						"          Name as string,",
-						"          ProductNumber as string,",
-						"          Color as string,",
-						"          StandardCost as decimal(19,4),",
-						"          ListPrice as decimal(19,4),",
-						"          Size as string,",
-						"          Weight as decimal(8,2),",
-						"          ProductCategoryID as integer,",
-						"          ProductModelID as integer,",
-						"          SellStartDate as timestamp,",
-						"          SellEndDate as timestamp,",
-						"          DiscontinuedDate as timestamp,",
-						"          ThumbNailPhoto as binary,",
-						"          ThumbnailPhotoFileName as string,",
-						"          rowguid as string,",
-						"          ModifiedDate as timestamp",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> Product",
-						"source(output(",
-						"          ProductModelID as integer,",
-						"          Name as string,",
-						"          CatalogDescription as string,",
-						"          rowguid as string,",
-						"          ModifiedDate as timestamp",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> ProductModel",
-						"source(output(",
-						"          ProductCategoryID as integer,",
-						"          ParentProductCategoryID as integer,",
-						"          Name as string,",
-						"          rowguid as string,",
-						"          ModifiedDate as timestamp",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> ProductCategory",
-						"source(output(",
-						"          CustomerSK as integer",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     query: 'select max(CustomerSK) as CustomerSK from dimcustomer',",
-						"     format: 'query',",
-						"     staged: true) ~> getmaxcustomerkey",
-						"source(output(",
-						"          productSK as integer,",
-						"          ProductID as integer,",
-						"          ProductModelID as integer,",
-						"          ProductcategoryID as integer,",
-						"          ProductName as string,",
-						"          ProductModelName as string,",
-						"          ProductCategoryName as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table',",
-						"     staged: true) ~> dimproducttablerecordsexisting",
-						"dimproductcomparison, ProductModel join(Product@ProductModelID == ProductModel@ProductModelID,",
-						"     joinType:'left',",
-						"     matchType:'exact',",
-						"     ignoreSpaces: false,",
-						"     broadcast: 'auto')~> productandproductmodel",
-						"productandproductmodel, ProductCategory join(Product@ProductCategoryID == ProductCategory@ProductCategoryID,",
-						"     joinType:'left',",
-						"     matchType:'exact',",
-						"     ignoreSpaces: false,",
-						"     broadcast: 'auto')~> join2",
-						"join2 select(mapColumn(",
-						"          ProductID,",
-						"          ProductModelID = ProductModel@ProductModelID,",
-						"          ProductCategoryID = ProductCategory@ProductCategoryID,",
-						"          ProductName = Product@Name,",
-						"          ProductModelName = ProductModel@Name,",
-						"          ProductCategoryName = ProductCategory@Name",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> select1",
-						"select1 keyGenerate(output(productSK as long),",
-						"     startAt: 1L,",
-						"     stepValue: 1L) ~> surrogateKey1",
-						"salesltcustomer select(mapColumn(",
-						"          CustomerID,",
-						"          CompanyName,",
-						"          SalesPerson",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> select2",
-						"select2 keyGenerate(output(CustomerSK as long),",
-						"     startAt: 1L,",
-						"     stepValue: 1L) ~> CustomerSK",
-						"CustomerSK derive(CustomerSK = CustomerSK + CustomerSKCacheSink#outputs()[1].CustomerSK) ~> CustomerSKupdated",
-						"Product, dimproducttablerecordsexisting exists(Product@ProductID == dimproducttablerecordsexisting@ProductID,",
-						"     negate:true,",
-						"     broadcast: 'auto')~> dimproductcomparison",
-						"CustomerSKupdated sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          CustomerSK as integer,",
-						"          CustomerID as integer,",
-						"          CompanyName as string,",
-						"          SalesPerson as string",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     staged: true,",
-						"     allowCopyCommand: true,",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          CustomerSK,",
-						"          CustomerID,",
-						"          CompanyName,",
-						"          SalesPerson",
-						"     )) ~> dimcustomer",
-						"surrogateKey1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          productSK as integer,",
-						"          ProductID as integer,",
-						"          ProductModelID as integer,",
-						"          ProductcategoryID as integer,",
-						"          ProductName as string,",
-						"          ProductModelName as string,",
-						"          ProductCategoryName as string",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     staged: true,",
-						"     allowCopyCommand: true,",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          productSK,",
-						"          ProductID,",
-						"          ProductModelID,",
-						"          ProductcategoryID = ProductCategoryID,",
-						"          ProductName,",
-						"          ProductModelName,",
-						"          ProductCategoryName",
-						"     )) ~> dimproduct",
-						"getmaxcustomerkey sink(validateSchema: false,",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     store: 'cache',",
-						"     format: 'inline',",
-						"     output: false,",
-						"     saveOrder: 1,",
-						"     mapColumn(",
-						"          CustomerSK",
-						"     )) ~> CustomerSKCacheSink"
-					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/dimcustomer_dataflow')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "customer_sqldatabase",
-								"type": "DatasetReference"
-							},
-							"name": "salesltcustomer"
-						},
-						{
-							"dataset": {
-								"referenceName": "product_sqldatabase",
-								"type": "DatasetReference"
-							},
-							"name": "Product"
-						},
-						{
-							"dataset": {
-								"referenceName": "ProductModel",
-								"type": "DatasetReference"
-							},
-							"name": "ProductModel"
-						},
-						{
-							"dataset": {
-								"referenceName": "ProductCategory",
-								"type": "DatasetReference"
-							},
-							"name": "ProductCategory"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "AzureSynapseAnalyticsTable4",
-								"type": "DatasetReference"
-							},
-							"name": "dimcustomer"
-						},
-						{
-							"dataset": {
-								"referenceName": "AzureSynapseAnalyticsTable5",
-								"type": "DatasetReference"
-							},
-							"name": "dimproduct"
-						}
-					],
-					"transformations": [
-						{
-							"name": "productandproductmodel"
-						},
-						{
-							"name": "join2"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          CustomerID as integer,",
-						"          NameStyle as boolean,",
-						"          Title as string,",
-						"          FirstName as string,",
-						"          MiddleName as string,",
-						"          LastName as string,",
-						"          Suffix as string,",
-						"          CompanyName as string,",
-						"          SalesPerson as string,",
-						"          EmailAddress as string,",
-						"          Phone as string,",
-						"          PasswordHash as string,",
-						"          PasswordSalt as string,",
-						"          rowguid as string,",
-						"          ModifiedDate as timestamp",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> salesltcustomer",
-						"source(output(",
-						"          ProductID as integer,",
-						"          Name as string,",
-						"          ProductNumber as string,",
-						"          Color as string,",
-						"          StandardCost as decimal(19,4),",
-						"          ListPrice as decimal(19,4),",
-						"          Size as string,",
-						"          Weight as decimal(8,2),",
-						"          ProductCategoryID as integer,",
-						"          ProductModelID as integer,",
-						"          SellStartDate as timestamp,",
-						"          SellEndDate as timestamp,",
-						"          DiscontinuedDate as timestamp,",
-						"          ThumbNailPhoto as binary,",
-						"          ThumbnailPhotoFileName as string,",
-						"          rowguid as string,",
-						"          ModifiedDate as timestamp",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> Product",
-						"source(output(",
-						"          ProductModelID as integer,",
-						"          Name as string,",
-						"          CatalogDescription as string,",
-						"          rowguid as string,",
-						"          ModifiedDate as timestamp",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> ProductModel",
-						"source(output(",
-						"          ProductCategoryID as integer,",
-						"          ParentProductCategoryID as integer,",
-						"          Name as string,",
-						"          rowguid as string,",
-						"          ModifiedDate as timestamp",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> ProductCategory",
-						"Product, ProductModel join(Product@ProductModelID == ProductModel@ProductModelID,",
-						"     joinType:'left',",
-						"     matchType:'exact',",
-						"     ignoreSpaces: false,",
-						"     broadcast: 'auto')~> productandproductmodel",
-						"productandproductmodel, ProductCategory join(Product@ProductCategoryID == ProductCategory@ProductCategoryID,",
-						"     joinType:'left',",
-						"     matchType:'exact',",
-						"     ignoreSpaces: false,",
-						"     broadcast: 'auto')~> join2",
-						"salesltcustomer sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          CustomerSK as integer,",
-						"          CustomerID as integer,",
-						"          CompanyName as string,",
-						"          SalesPerson as string",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     staged: true,",
-						"     allowCopyCommand: true,",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          CustomerID,",
-						"          CompanyName,",
-						"          SalesPerson",
-						"     )) ~> dimcustomer",
-						"join2 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          productSK as integer,",
-						"          ProductID as integer,",
-						"          ProductModelID as integer,",
-						"          ProductcategoryID as integer,",
-						"          ProductName as string,",
-						"          ProductModelName as string,",
-						"          ProductCategoryName as string",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     staged: true,",
-						"     allowCopyCommand: true,",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          ProductID,",
-						"          ProductModelID = ProductModel@ProductModelID,",
-						"          ProductcategoryID = ProductCategory@ProductCategoryID,",
-						"          ProductName = Product@Name,",
-						"          ProductModelName = ProductModel@Name,",
-						"          ProductCategoryName = ProductCategory@Name",
-						"     )) ~> dimproduct"
-					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/dimcustomer_dimproduct_surrogatekey')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "customer_sqldatabase",
-								"type": "DatasetReference"
-							},
-							"name": "salesltcustomer"
-						},
-						{
-							"dataset": {
-								"referenceName": "product_sqldatabase",
-								"type": "DatasetReference"
-							},
-							"name": "Product"
-						},
-						{
-							"dataset": {
-								"referenceName": "ProductModel",
-								"type": "DatasetReference"
-							},
-							"name": "ProductModel"
-						},
-						{
-							"dataset": {
-								"referenceName": "ProductCategory",
-								"type": "DatasetReference"
-							},
-							"name": "ProductCategory"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "AzureSynapseAnalyticsTable4",
-								"type": "DatasetReference"
-							},
-							"name": "dimcustomer"
-						},
-						{
-							"dataset": {
-								"referenceName": "AzureSynapseAnalyticsTable5",
-								"type": "DatasetReference"
-							},
-							"name": "dimproduct"
-						}
-					],
-					"transformations": [
-						{
-							"name": "productandproductmodel"
-						},
-						{
-							"name": "join2"
-						},
-						{
-							"name": "select1"
-						},
-						{
-							"name": "surrogateKey1"
-						},
-						{
-							"name": "select2"
-						},
-						{
-							"name": "CustomerSK"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          CustomerID as integer,",
-						"          NameStyle as boolean,",
-						"          Title as string,",
-						"          FirstName as string,",
-						"          MiddleName as string,",
-						"          LastName as string,",
-						"          Suffix as string,",
-						"          CompanyName as string,",
-						"          SalesPerson as string,",
-						"          EmailAddress as string,",
-						"          Phone as string,",
-						"          PasswordHash as string,",
-						"          PasswordSalt as string,",
-						"          rowguid as string,",
-						"          ModifiedDate as timestamp",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> salesltcustomer",
-						"source(output(",
-						"          ProductID as integer,",
-						"          Name as string,",
-						"          ProductNumber as string,",
-						"          Color as string,",
-						"          StandardCost as decimal(19,4),",
-						"          ListPrice as decimal(19,4),",
-						"          Size as string,",
-						"          Weight as decimal(8,2),",
-						"          ProductCategoryID as integer,",
-						"          ProductModelID as integer,",
-						"          SellStartDate as timestamp,",
-						"          SellEndDate as timestamp,",
-						"          DiscontinuedDate as timestamp,",
-						"          ThumbNailPhoto as binary,",
-						"          ThumbnailPhotoFileName as string,",
-						"          rowguid as string,",
-						"          ModifiedDate as timestamp",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> Product",
-						"source(output(",
-						"          ProductModelID as integer,",
-						"          Name as string,",
-						"          CatalogDescription as string,",
-						"          rowguid as string,",
-						"          ModifiedDate as timestamp",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> ProductModel",
-						"source(output(",
-						"          ProductCategoryID as integer,",
-						"          ParentProductCategoryID as integer,",
-						"          Name as string,",
-						"          rowguid as string,",
-						"          ModifiedDate as timestamp",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> ProductCategory",
-						"Product, ProductModel join(Product@ProductModelID == ProductModel@ProductModelID,",
-						"     joinType:'left',",
-						"     matchType:'exact',",
-						"     ignoreSpaces: false,",
-						"     broadcast: 'auto')~> productandproductmodel",
-						"productandproductmodel, ProductCategory join(Product@ProductCategoryID == ProductCategory@ProductCategoryID,",
-						"     joinType:'left',",
-						"     matchType:'exact',",
-						"     ignoreSpaces: false,",
-						"     broadcast: 'auto')~> join2",
-						"join2 select(mapColumn(",
-						"          ProductID,",
-						"          ProductModelID = ProductModel@ProductModelID,",
-						"          ProductCategoryID = ProductCategory@ProductCategoryID,",
-						"          ProductName = Product@Name,",
-						"          ProductModelName = ProductModel@Name,",
-						"          ProductCategoryName = ProductCategory@Name",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> select1",
-						"select1 keyGenerate(output(productSK as long),",
-						"     startAt: 1L,",
-						"     stepValue: 1L) ~> surrogateKey1",
-						"salesltcustomer select(mapColumn(",
-						"          CustomerID,",
-						"          CompanyName,",
-						"          SalesPerson",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> select2",
-						"select2 keyGenerate(output(CustomerSK as long),",
-						"     startAt: 1L,",
-						"     stepValue: 1L) ~> CustomerSK",
-						"CustomerSK sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          CustomerSK as integer,",
-						"          CustomerID as integer,",
-						"          CompanyName as string,",
-						"          SalesPerson as string",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     staged: true,",
-						"     allowCopyCommand: true,",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          CustomerSK,",
-						"          CustomerID,",
-						"          CompanyName,",
-						"          SalesPerson",
-						"     )) ~> dimcustomer",
-						"surrogateKey1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          productSK as integer,",
-						"          ProductID as integer,",
-						"          ProductModelID as integer,",
-						"          ProductcategoryID as integer,",
-						"          ProductName as string,",
-						"          ProductModelName as string,",
-						"          ProductCategoryName as string",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     staged: true,",
-						"     allowCopyCommand: true,",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          productSK,",
-						"          ProductID,",
-						"          ProductModelID,",
-						"          ProductcategoryID = ProductCategoryID,",
-						"          ProductName,",
-						"          ProductModelName,",
-						"          ProductCategoryName",
-						"     )) ~> dimproduct"
 					]
 				}
 			},
