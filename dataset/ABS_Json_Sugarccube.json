@@ -1,0 +1,53 @@
+{
+	"name": "ABS_Json_Sugarccube",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "log_csv_ADLS_Gen2_Source",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "RichardSwinbank_book/Chapter3"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "April.json",
+				"folderPath": "azure-data-factory-by-example-main/SampleData/SugarCube/2020/Q2",
+				"fileSystem": "sampledata"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"Month": {
+					"type": "string"
+				},
+				"Company": {
+					"type": "string"
+				},
+				"Sales": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"Product": {
+								"type": "string"
+							},
+							"ManufacturerProductCode": {
+								"type": "string"
+							},
+							"Units": {
+								"type": "integer"
+							},
+							"Value": {
+								"type": "number"
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
