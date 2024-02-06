@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "Udemy_DP203"
+			"name": "RichardSwinbank_book/Chapter2"
 		},
 		"annotations": [],
 		"type": "Binary",
