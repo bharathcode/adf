@@ -13,8 +13,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "Sales.csv",
-				"folderPath": "azure-data-factory-by-example-main/SampleData/SweetTreats/Apr-20",
+				"fileName": "2020-04.csv",
+				"folderPath": "azure-data-factory-by-example-main/SampleData/CandyShack",
 				"fileSystem": "sampledata"
 			},
 			"columnDelimiter": ",",
