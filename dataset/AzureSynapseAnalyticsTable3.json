@@ -57,5 +57,6 @@
 			"schema": "dbo",
 			"table": "FactSales"
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
 }

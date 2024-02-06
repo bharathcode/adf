@@ -99,7 +99,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> selectcolumn",
-				"selectcolumn derive(totalamount =  multiply(OrderQty,UnitPrice)) ~> totalamount",
+				"selectcolumn derive(totalamount = multiply(OrderQty,UnitPrice)) ~> totalamount",
 				"totalamount sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",

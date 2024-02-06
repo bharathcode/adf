@@ -36,5 +36,6 @@
 			"schema": "SalesLT",
 			"table": "ProductModel"
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
 }

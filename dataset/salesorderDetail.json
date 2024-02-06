@@ -61,5 +61,6 @@
 			"schema": "SalesLT",
 			"table": "SalesOrderDetail"
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
 }

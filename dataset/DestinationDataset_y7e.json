@@ -57,5 +57,6 @@
 			"schema": "dbo",
 			"table": "log_csv_dedicated"
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
 }

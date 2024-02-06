@@ -39,7 +39,7 @@
 				"     documentForm: 'arrayOfDocuments') ~> customerarrayjson",
 				"customerarrayjson foldDown(unroll(courses, courses),",
 				"     mapColumn(",
-				"          courses = courses,",
+				"          courses,",
 				"          customerid,",
 				"          customername,",
 				"          registered",

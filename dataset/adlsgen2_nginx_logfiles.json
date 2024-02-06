@@ -13,5 +13,6 @@
 				"fileSystem": "nginx"
 			}
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
 }
