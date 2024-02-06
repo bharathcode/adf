@@ -248,6 +248,9 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
+				"folder": {
+					"name": "Udemy_dp203"
+				},
 				"annotations": [],
 				"lastPublishTime": "2024-02-04T08:59:23Z"
 			},
@@ -310,6 +313,9 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
+				"folder": {
+					"name": "Udemy_dp203"
+				},
 				"annotations": [],
 				"lastPublishTime": "2024-02-04T17:02:53Z"
 			},
@@ -358,6 +364,9 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Udemy_dp203"
 				},
 				"annotations": [],
 				"lastPublishTime": "2024-02-06T00:41:54Z"
@@ -464,6 +473,9 @@
 						"type": "String"
 					}
 				},
+				"folder": {
+					"name": "Udemy_dp203"
+				},
 				"annotations": [],
 				"lastPublishTime": "2024-02-06T01:36:32Z"
 			},
@@ -505,6 +517,9 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Udemy_dp203"
 				},
 				"annotations": [],
 				"lastPublishTime": "2024-02-06T01:13:16Z"
@@ -708,6 +723,9 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Udemy_dp203"
 				},
 				"annotations": [],
 				"lastPublishTime": "2024-02-04T09:14:13Z"
@@ -1102,6 +1120,9 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
+				"folder": {
+					"name": "Udemy_dp203"
+				},
 				"annotations": [],
 				"lastPublishTime": "2024-02-04T11:10:55Z"
 			},
@@ -1479,6 +1500,9 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Udemy_dp203"
 				},
 				"annotations": [],
 				"lastPublishTime": "2024-02-04T11:23:12Z"
@@ -1865,6 +1889,9 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
+				"folder": {
+					"name": "Udemy_dp203"
+				},
 				"annotations": [],
 				"lastPublishTime": "2024-02-04T11:27:55Z"
 			},
@@ -2240,6 +2267,9 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
+				"folder": {
+					"name": "Udemy_dp203"
+				},
 				"annotations": [],
 				"lastPublishTime": "2024-02-04T11:19:07Z"
 			},
@@ -2348,6 +2378,9 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
+				"folder": {
+					"name": "Udemy_dp203"
+				},
 				"annotations": [],
 				"lastPublishTime": "2024-02-05T09:14:34Z"
 			},
@@ -2359,7 +2392,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/copyzipfiles_unzipthem')]",
+			"name": "[concat(parameters('factoryName'), '/RSBook_copyzipfiles_unzipthem')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -2427,6 +2460,9 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
+				"folder": {
+					"name": "RichardSwinBank/Chapter2"
+				},
 				"annotations": []
 			},
 			"dependsOn": [
@@ -2479,6 +2515,9 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Udemy_dp203"
 				},
 				"annotations": [],
 				"lastPublishTime": "2024-02-05T04:25:26Z"
@@ -2533,6 +2572,9 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Udemy_dp203"
 				},
 				"annotations": [],
 				"lastPublishTime": "2024-02-05T03:06:34Z"
@@ -2591,6 +2633,9 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Udemy_dp203"
 				},
 				"annotations": [],
 				"lastPublishTime": "2024-02-04T14:28:20Z"
@@ -2764,6 +2809,9 @@
 						"type": "String"
 					}
 				},
+				"folder": {
+					"name": "Udemy_dp203"
+				},
 				"annotations": [],
 				"lastPublishTime": "2024-02-06T01:08:07Z"
 			},
@@ -2819,6 +2867,9 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
+				"folder": {
+					"name": "Udemy_dp203"
+				},
 				"annotations": [],
 				"lastPublishTime": "2024-02-05T09:59:46Z"
 			},
@@ -2872,6 +2923,9 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Udemy_dp203"
 				},
 				"annotations": [],
 				"lastPublishTime": "2024-02-04T17:51:44Z"
@@ -3079,6 +3133,9 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
+				"folder": {
+					"name": "Udemy_dp203"
+				},
 				"annotations": [],
 				"lastPublishTime": "2024-02-05T02:44:52Z"
 			},
@@ -3138,6 +3195,9 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
+				"folder": {
+					"name": "Udemy_dp203"
+				},
 				"annotations": [],
 				"lastPublishTime": "2024-02-04T15:44:24Z"
 			},
@@ -3192,6 +3252,9 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Udemy_dp203"
 				},
 				"annotations": [],
 				"lastPublishTime": "2024-02-04T13:13:02Z"
@@ -3354,6 +3417,9 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
+				"folder": {
+					"name": "Udemy_dp203"
+				},
 				"annotations": [],
 				"lastPublishTime": "2024-02-04T10:39:44Z"
 			},
@@ -3389,6 +3455,9 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Udemy_dp203"
 				},
 				"annotations": [],
 				"lastPublishTime": "2024-02-05T11:42:13Z"
@@ -3442,6 +3511,9 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
+				"folder": {
+					"name": "Udemy_dp203"
+				},
 				"annotations": [],
 				"lastPublishTime": "2024-02-04T14:29:43Z"
 			},
@@ -3458,6 +3530,9 @@
 				"linkedServiceName": {
 					"referenceName": "log_csv_ADLS_Gen2_Source",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Udemy_DP203"
 				},
 				"annotations": [],
 				"type": "DelimitedText",
@@ -3500,6 +3575,9 @@
 					"referenceName": "dp203sqldatabase",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"annotations": [],
 				"type": "AzureSqlTable",
 				"schema": [],
@@ -3517,6 +3595,9 @@
 				"linkedServiceName": {
 					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Udemy_DP203"
 				},
 				"annotations": [],
 				"type": "AzureSqlDWTable",
@@ -3590,6 +3671,9 @@
 					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"annotations": [],
 				"type": "AzureSqlDWTable",
 				"schema": [
@@ -3624,6 +3708,9 @@
 				"linkedServiceName": {
 					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Udemy_DP203"
 				},
 				"annotations": [],
 				"type": "AzureSqlDWTable",
@@ -3732,6 +3819,9 @@
 					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"annotations": [],
 				"type": "AzureSqlDWTable",
 				"schema": [
@@ -3791,6 +3881,9 @@
 				"linkedServiceName": {
 					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Udemy_DP203"
 				},
 				"annotations": [],
 				"type": "AzureSqlDWTable",
@@ -3858,6 +3951,9 @@
 					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"annotations": [],
 				"type": "AzureSqlDWTable",
 				"schema": [
@@ -3897,6 +3993,9 @@
 				"linkedServiceName": {
 					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Udemy_DP203"
 				},
 				"annotations": [],
 				"type": "AzureSqlDWTable",
@@ -3952,6 +4051,9 @@
 					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"annotations": [],
 				"type": "AzureSqlDWTable",
 				"schema": [
@@ -3991,6 +4093,9 @@
 				"linkedServiceName": {
 					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Udemy_DP203"
 				},
 				"annotations": [],
 				"type": "AzureSqlDWTable",
@@ -4060,6 +4165,9 @@
 					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"annotations": [],
 				"type": "AzureSqlDWTable",
 				"schema": [
@@ -4103,6 +4211,9 @@
 				"linkedServiceName": {
 					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Udemy_DP203"
 				},
 				"annotations": [],
 				"type": "AzureSqlDWTable",
@@ -4172,6 +4283,9 @@
 					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"annotations": [],
 				"type": "AzureSqlDWTable",
 				"schema": [
@@ -4210,6 +4324,9 @@
 				"linkedServiceName": {
 					"referenceName": "log_csv_ADLS_Gen2_Source",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Udemy_DP203"
 				},
 				"annotations": [],
 				"type": "DelimitedText",
@@ -4297,6 +4414,9 @@
 					"referenceName": "log_csv_ADLS_Gen2_Source",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"annotations": [],
 				"type": "DelimitedText",
 				"typeProperties": {
@@ -4381,6 +4501,9 @@
 				"linkedServiceName": {
 					"referenceName": "log_csv_ADLS_Gen2_Source",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Udemy_DP203"
 				},
 				"annotations": [],
 				"type": "DelimitedText",
@@ -4472,6 +4595,9 @@
 						"type": "string"
 					}
 				},
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"annotations": [],
 				"type": "DelimitedText",
 				"typeProperties": {
@@ -4561,6 +4687,9 @@
 					"referenceName": "log_csv_ADLS_Gen2_Source",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "RichardSwinbank_book/Chapter2"
+				},
 				"annotations": [],
 				"type": "Binary",
 				"typeProperties": {
@@ -4582,6 +4711,9 @@
 				"linkedServiceName": {
 					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Udemy_DP203"
 				},
 				"annotations": [],
 				"type": "AzureSqlDWTable",
@@ -4649,6 +4781,9 @@
 					"referenceName": "log_csv_ADLS_Gen2_Source",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"annotations": [],
 				"type": "Json",
 				"typeProperties": {
@@ -4708,6 +4843,9 @@
 				"linkedServiceName": {
 					"referenceName": "log_csv_ADLS_Gen2_Source",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Udemy_DP203"
 				},
 				"annotations": [],
 				"type": "Parquet",
@@ -4779,6 +4917,9 @@
 					"referenceName": "dp203sqldatabase",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"annotations": [],
 				"type": "AzureSqlTable",
 				"schema": [
@@ -4825,6 +4966,9 @@
 					"referenceName": "dp203sqldatabase",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"annotations": [],
 				"type": "AzureSqlTable",
 				"schema": [
@@ -4870,6 +5014,9 @@
 					"referenceName": "log_csv_ADLS_Gen2_Source",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "RichardSwinbank_book/Chapter2"
+				},
 				"annotations": [],
 				"type": "Binary",
 				"typeProperties": {
@@ -4895,6 +5042,9 @@
 				"linkedServiceName": {
 					"referenceName": "log_csv_ADLS_Gen2_Source",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Udemy_DP203"
 				},
 				"annotations": [],
 				"type": "DelimitedText",
@@ -4969,6 +5119,9 @@
 					"referenceName": "log_csv_ADLS_Gen2_Source",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"annotations": [],
 				"type": "Binary",
 				"typeProperties": {
@@ -4991,6 +5144,9 @@
 					"referenceName": "azurevm",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"annotations": [],
 				"type": "Binary",
 				"typeProperties": {
@@ -5012,6 +5168,9 @@
 				"linkedServiceName": {
 					"referenceName": "log_csv_ADLS_Gen2_Source",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Udemy_DP203"
 				},
 				"annotations": [],
 				"type": "Json",
@@ -5067,6 +5226,9 @@
 				"linkedServiceName": {
 					"referenceName": "dp203sqldatabase",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Udemy_DP203"
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
@@ -5153,6 +5315,9 @@
 					"referenceName": "log_csv_ADLS_Gen2_Source",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"annotations": [],
 				"type": "Json",
 				"typeProperties": {
@@ -5196,6 +5361,9 @@
 				"linkedServiceName": {
 					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Udemy_DP203"
 				},
 				"annotations": [],
 				"type": "AzureSqlDWTable",
@@ -5243,6 +5411,9 @@
 				"linkedServiceName": {
 					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Udemy_DP203"
 				},
 				"annotations": [],
 				"type": "AzureSqlDWTable",
@@ -5297,6 +5468,9 @@
 				"linkedServiceName": {
 					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Udemy_DP203"
 				},
 				"annotations": [],
 				"type": "AzureSqlDWTable",
@@ -5366,6 +5540,9 @@
 					"referenceName": "log_csv_ADLS_Gen2_Source",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"annotations": [],
 				"type": "Parquet",
 				"typeProperties": {
@@ -5434,6 +5611,9 @@
 				"linkedServiceName": {
 					"referenceName": "dp203sqldatabase",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Udemy_DP203"
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
@@ -5542,6 +5722,9 @@
 					"referenceName": "dp203sqldatabase",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"annotations": [],
 				"type": "AzureSqlTable",
 				"schema": [
@@ -5611,6 +5794,9 @@
 				"linkedServiceName": {
 					"referenceName": "dp203sqldatabase",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Udemy_DP203"
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
@@ -5817,6 +6003,9 @@
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"type": "MappingDataFlow",
 				"typeProperties": {
 					"sources": [
@@ -5910,6 +6099,9 @@
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"type": "MappingDataFlow",
 				"typeProperties": {
 					"sources": [
@@ -6036,6 +6228,9 @@
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"type": "MappingDataFlow",
 				"typeProperties": {
 					"sources": [
@@ -6181,6 +6376,9 @@
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"type": "MappingDataFlow",
 				"typeProperties": {
 					"sources": [
@@ -6270,6 +6468,9 @@
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"type": "MappingDataFlow",
 				"typeProperties": {
 					"sources": [
@@ -6352,6 +6553,9 @@
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"type": "MappingDataFlow",
 				"typeProperties": {
 					"sources": [
@@ -6656,6 +6860,9 @@
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"type": "MappingDataFlow",
 				"typeProperties": {
 					"sources": [
@@ -6858,6 +7065,9 @@
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"type": "MappingDataFlow",
 				"typeProperties": {
 					"sources": [
@@ -7097,6 +7307,9 @@
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"type": "MappingDataFlow",
 				"typeProperties": {
 					"sources": [
@@ -7193,6 +7406,9 @@
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"type": "MappingDataFlow",
 				"typeProperties": {
 					"sources": [
@@ -7275,6 +7491,9 @@
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"type": "MappingDataFlow",
 				"typeProperties": {
 					"sources": [
@@ -7342,6 +7561,116 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/Parquet1')]",
 				"[concat(variables('factoryId'), '/datasets/Json1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ASQL_salesLoad')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dp203sqldatabase",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "RichardSwinbank_book/Chapter3"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "RowId",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Retailer",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SalesMonth",
+						"type": "date"
+					},
+					{
+						"name": "Product",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ManufacturerProductCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SalesValueUSD",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 2
+					},
+					{
+						"name": "UnitsSold",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Sales_LOAD"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/dp203sqldatabase')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ADLSGen2_CSV_SweetTreats')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "log_csv_ADLS_Gen2_Source",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "RichardSwinbank_book/Chapter3"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Sales.csv",
+						"folderPath": "azure-data-factory-by-example-main/SampleData/SweetTreats/Apr-20",
+						"fileSystem": "sampledata"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "SalesMonth",
+						"type": "String"
+					},
+					{
+						"name": "Retailer",
+						"type": "String"
+					},
+					{
+						"name": "Product",
+						"type": "String"
+					},
+					{
+						"name": "SalesValueUSD",
+						"type": "String"
+					},
+					{
+						"name": "UnitsSold",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/log_csv_ADLS_Gen2_Source')]"
 			]
 		}
 	]

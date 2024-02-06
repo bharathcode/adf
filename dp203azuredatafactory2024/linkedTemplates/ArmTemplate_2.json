@@ -33,6 +33,9 @@
 					"referenceName": "dp203sqldatabase",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"annotations": [],
 				"type": "AzureSqlTable",
 				"schema": [
@@ -138,6 +141,9 @@
 					"referenceName": "dp203sqldatabase",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"annotations": [],
 				"type": "AzureSqlTable",
 				"schema": [
@@ -205,6 +211,9 @@
 				"linkedServiceName": {
 					"referenceName": "dp203sqldatabase",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Udemy_DP203"
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
@@ -346,6 +355,112 @@
 					"referenceName": "dp203azurevmruntime",
 					"type": "IntegrationRuntimeReference"
 				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ASQL_salesLoad')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dp203sqldatabase",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "RichardSwinbank_book/Chapter3"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "RowId",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Retailer",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SalesMonth",
+						"type": "date"
+					},
+					{
+						"name": "Product",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ManufacturerProductCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SalesValueUSD",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 2
+					},
+					{
+						"name": "UnitsSold",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Sales_LOAD"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ADLSGen2_CSV_SweetTreats')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "log_csv_ADLS_Gen2_Source",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "RichardSwinbank_book/Chapter3"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Sales.csv",
+						"folderPath": "azure-data-factory-by-example-main/SampleData/SweetTreats/Apr-20",
+						"fileSystem": "sampledata"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "SalesMonth",
+						"type": "String"
+					},
+					{
+						"name": "Retailer",
+						"type": "String"
+					},
+					{
+						"name": "Product",
+						"type": "String"
+					},
+					{
+						"name": "SalesValueUSD",
+						"type": "String"
+					},
+					{
+						"name": "UnitsSold",
+						"type": "String"
+					}
+				]
 			},
 			"dependsOn": []
 		},
@@ -557,6 +672,9 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
+				"folder": {
+					"name": "Udemy_dp203"
+				},
 				"annotations": [],
 				"lastPublishTime": "2024-02-04T08:59:23Z"
 			},
@@ -602,6 +720,9 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Udemy_dp203"
 				},
 				"annotations": [],
 				"lastPublishTime": "2024-02-06T00:41:54Z"
@@ -705,6 +826,9 @@
 					"SalesPerson": {
 						"type": "String"
 					}
+				},
+				"folder": {
+					"name": "Udemy_dp203"
 				},
 				"annotations": [],
 				"lastPublishTime": "2024-02-06T01:36:32Z"
@@ -906,6 +1030,9 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Udemy_dp203"
 				},
 				"annotations": [],
 				"lastPublishTime": "2024-02-04T09:14:13Z"
@@ -1297,6 +1424,9 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
+				"folder": {
+					"name": "Udemy_dp203"
+				},
 				"annotations": [],
 				"lastPublishTime": "2024-02-04T11:10:55Z"
 			},
@@ -1670,6 +1800,9 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Udemy_dp203"
 				},
 				"annotations": [],
 				"lastPublishTime": "2024-02-04T11:23:12Z"
@@ -2052,6 +2185,9 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
+				"folder": {
+					"name": "Udemy_dp203"
+				},
 				"annotations": [],
 				"lastPublishTime": "2024-02-04T11:27:55Z"
 			},
@@ -2422,13 +2558,16 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
+				"folder": {
+					"name": "Udemy_dp203"
+				},
 				"annotations": [],
 				"lastPublishTime": "2024-02-04T11:19:07Z"
 			},
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/copyzipfiles_unzipthem')]",
+			"name": "[concat(parameters('factoryName'), '/RSBook_copyzipfiles_unzipthem')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -2495,6 +2634,9 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "RichardSwinBank/Chapter2"
 				},
 				"annotations": []
 			},
@@ -2664,6 +2806,9 @@
 						"type": "String"
 					}
 				},
+				"folder": {
+					"name": "Udemy_dp203"
+				},
 				"annotations": [],
 				"lastPublishTime": "2024-02-06T01:08:07Z"
 			},
@@ -2822,6 +2967,9 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
+				"folder": {
+					"name": "Udemy_dp203"
+				},
 				"annotations": [],
 				"lastPublishTime": "2024-02-04T10:39:44Z"
 			},
@@ -2835,6 +2983,9 @@
 				"linkedServiceName": {
 					"referenceName": "azurevm",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Udemy_DP203"
 				},
 				"annotations": [],
 				"type": "Binary",
@@ -2854,6 +3005,9 @@
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"type": "MappingDataFlow",
 				"typeProperties": {
 					"sources": [
@@ -2944,6 +3098,9 @@
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"type": "MappingDataFlow",
 				"typeProperties": {
 					"sources": [
@@ -3063,236 +3220,6 @@
 				"[concat(variables('factoryId'), '/datasets/salesorderDetail')]",
 				"[concat(variables('factoryId'), '/datasets/salesorderHeader')]"
 			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/copytofacttable_derivedcolumn')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "salesorderDetail",
-								"type": "DatasetReference"
-							},
-							"name": "salesorderdetailtable"
-						},
-						{
-							"dataset": {
-								"referenceName": "salesorderHeader",
-								"type": "DatasetReference"
-							},
-							"name": "Salesorder"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "AzureSynapseAnalyticsTable3",
-								"type": "DatasetReference"
-							},
-							"name": "factsalesTable"
-						}
-					],
-					"transformations": [
-						{
-							"name": "join1"
-						},
-						{
-							"name": "selectcolumn"
-						},
-						{
-							"name": "totalamount"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          SalesOrderID as integer,",
-						"          SalesOrderDetailID as integer,",
-						"          OrderQty as integer,",
-						"          ProductID as integer,",
-						"          UnitPrice as decimal(19,4),",
-						"          UnitPriceDiscount as decimal(19,4),",
-						"          LineTotal as decimal(38,6),",
-						"          rowguid as string,",
-						"          ModifiedDate as timestamp",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> salesorderdetailtable",
-						"source(output(",
-						"          SalesOrderID as integer,",
-						"          RevisionNumber as integer,",
-						"          OrderDate as timestamp,",
-						"          DueDate as timestamp,",
-						"          ShipDate as timestamp,",
-						"          Status as integer,",
-						"          OnlineOrderFlag as boolean,",
-						"          SalesOrderNumber as string,",
-						"          PurchaseOrderNumber as string,",
-						"          AccountNumber as string,",
-						"          CustomerID as integer,",
-						"          ShipToAddressID as integer,",
-						"          BillToAddressID as integer,",
-						"          ShipMethod as string,",
-						"          CreditCardApprovalCode as string,",
-						"          SubTotal as decimal(19,4),",
-						"          TaxAmt as decimal(19,4),",
-						"          Freight as decimal(19,4),",
-						"          TotalDue as decimal(19,4),",
-						"          Comment as string,",
-						"          rowguid as string,",
-						"          ModifiedDate as timestamp",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> Salesorder",
-						"salesorderdetailtable, Salesorder join(salesorderdetailtable@SalesOrderID == Salesorder@SalesOrderID,",
-						"     joinType:'left',",
-						"     matchType:'exact',",
-						"     ignoreSpaces: false,",
-						"     broadcast: 'auto')~> join1",
-						"join1 select(mapColumn(",
-						"          ProductID,",
-						"          SalesOrderID = salesorderdetailtable@SalesOrderID,",
-						"          CustomerID,",
-						"          OrderQty,",
-						"          UnitPrice,",
-						"          OrderDate,",
-						"          TaxAmt",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> selectcolumn",
-						"selectcolumn derive(totalamount = multiply(OrderQty,UnitPrice)) ~> totalamount",
-						"totalamount sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          ProductID as integer,",
-						"          SalesOrderID as integer,",
-						"          CustomerID as integer,",
-						"          OrderQty as integer,",
-						"          UnitPrice as decimal(19,4),",
-						"          OrderDate as timestamp,",
-						"          TaxAmt as decimal(19,4),",
-						"          totalamount as decimal(19,4)",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     staged: true,",
-						"     allowCopyCommand: true,",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          ProductID,",
-						"          SalesOrderID,",
-						"          CustomerID,",
-						"          OrderQty,",
-						"          UnitPrice,",
-						"          OrderDate,",
-						"          TaxAmt,",
-						"          totalamount",
-						"     )) ~> factsalesTable"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/salesorderDetail')]",
-				"[concat(variables('factoryId'), '/datasets/salesorderHeader')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/customeraobject_to_dedicatesqlpool')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "customer_obj_json_data",
-								"type": "DatasetReference"
-							},
-							"name": "customerarrayjson"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "customercourseobject_dedicatesqlpool",
-								"type": "DatasetReference"
-							},
-							"name": "customerpooldb"
-						}
-					],
-					"transformations": [
-						{
-							"name": "flattencourses"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          customerid as integer,",
-						"          customername as string,",
-						"          registered as boolean,",
-						"          courses as string[],",
-						"          details as (mobile as string, city as string)",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false,",
-						"     documentForm: 'singleDocument') ~> customerarrayjson",
-						"customerarrayjson foldDown(unroll(courses, courses),",
-						"     mapColumn(",
-						"          courses,",
-						"          customerid,",
-						"          customername,",
-						"          registered,",
-						"          mobile = details.mobile,",
-						"          city = details.city",
-						"     ),",
-						"     skipDuplicateMapInputs: false,",
-						"     skipDuplicateMapOutputs: false) ~> flattencourses",
-						"flattencourses sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          CustomerID as integer,",
-						"          CustomerName as string,",
-						"          Registered as boolean,",
-						"          Courses as string,",
-						"          Mobile as string,",
-						"          City as string",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     staged: true,",
-						"     allowCopyCommand: true,",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          CustomerID = customerid,",
-						"          CustomerName = customername,",
-						"          Registered = registered,",
-						"          Courses = courses,",
-						"          Mobile = mobile,",
-						"          City = city",
-						"     )) ~> customerpooldb"
-					]
-				}
-			},
-			"dependsOn": []
 		}
 	]
 }

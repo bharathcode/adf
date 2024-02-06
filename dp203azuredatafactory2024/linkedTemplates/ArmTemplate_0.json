@@ -56,6 +56,9 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
+				"folder": {
+					"name": "Udemy_dp203"
+				},
 				"annotations": [],
 				"lastPublishTime": "2024-02-05T11:42:13Z"
 			},
@@ -149,6 +152,9 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
+				"folder": {
+					"name": "Udemy_dp203"
+				},
 				"annotations": [],
 				"lastPublishTime": "2024-02-06T01:13:16Z"
 			},
@@ -164,6 +170,9 @@
 				"linkedServiceName": {
 					"referenceName": "log_csv_ADLS_Gen2_Source",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Udemy_DP203"
 				},
 				"annotations": [],
 				"type": "DelimitedText",
@@ -206,6 +215,9 @@
 					"referenceName": "dp203sqldatabase",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"annotations": [],
 				"type": "AzureSqlTable",
 				"schema": [],
@@ -223,6 +235,9 @@
 				"linkedServiceName": {
 					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Udemy_DP203"
 				},
 				"annotations": [],
 				"type": "AzureSqlDWTable",
@@ -296,6 +311,9 @@
 					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"annotations": [],
 				"type": "AzureSqlDWTable",
 				"schema": [
@@ -330,6 +348,9 @@
 				"linkedServiceName": {
 					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Udemy_DP203"
 				},
 				"annotations": [],
 				"type": "AzureSqlDWTable",
@@ -438,6 +459,9 @@
 					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"annotations": [],
 				"type": "AzureSqlDWTable",
 				"schema": [
@@ -497,6 +521,9 @@
 				"linkedServiceName": {
 					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Udemy_DP203"
 				},
 				"annotations": [],
 				"type": "AzureSqlDWTable",
@@ -564,6 +591,9 @@
 					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"annotations": [],
 				"type": "AzureSqlDWTable",
 				"schema": [
@@ -603,6 +633,9 @@
 				"linkedServiceName": {
 					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Udemy_DP203"
 				},
 				"annotations": [],
 				"type": "AzureSqlDWTable",
@@ -658,6 +691,9 @@
 					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"annotations": [],
 				"type": "AzureSqlDWTable",
 				"schema": [
@@ -697,6 +733,9 @@
 				"linkedServiceName": {
 					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Udemy_DP203"
 				},
 				"annotations": [],
 				"type": "AzureSqlDWTable",
@@ -766,6 +805,9 @@
 					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "Udemy_DP203"
+				},
 				"annotations": [],
 				"type": "AzureSqlDWTable",
 				"schema": [
@@ -809,6 +851,9 @@
 				"linkedServiceName": {
 					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Udemy_DP203"
 				},
 				"annotations": [],
 				"type": "AzureSqlDWTable",
@@ -877,6 +922,9 @@
 				"linkedServiceName": {
 					"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Udemy_DP203"
 				},
 				"annotations": [],
 				"type": "AzureSqlDWTable",
