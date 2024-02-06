@@ -1,6 +1,9 @@
 {
 	"name": "customeraobject_to_dedicatesqlpool",
 	"properties": {
+		"folder": {
+			"name": "Udemy_DP203"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [

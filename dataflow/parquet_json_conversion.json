@@ -1,6 +1,9 @@
 {
 	"name": "parquet_json_conversion",
 	"properties": {
+		"folder": {
+			"name": "Udemy_DP203"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [

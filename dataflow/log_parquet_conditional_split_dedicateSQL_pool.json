@@ -1,6 +1,9 @@
 {
 	"name": "log_parquet_conditional_split_dedicateSQL_pool",
 	"properties": {
+		"folder": {
+			"name": "Udemy_DP203"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
