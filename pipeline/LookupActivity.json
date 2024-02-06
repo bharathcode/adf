@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Lookup1",
+				"name": "storedprocedure",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -32,8 +32,64 @@
 						"type": "DatasetReference"
 					}
 				}
+			},
+			{
+				"name": "Companyname",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "storedprocedure",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "CompanyName",
+					"value": {
+						"value": "@activity('storedprocedure').output.firstRow.CompanyName",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "SalesPerson",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "storedprocedure",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "SalesPerson",
+					"value": {
+						"value": "@activity('storedprocedure').output.firstRow.SalesPerson",
+						"type": "Expression"
+					}
+				}
 			}
 		],
+		"variables": {
+			"CompanyName": {
+				"type": "String"
+			},
+			"SalesPerson": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }
