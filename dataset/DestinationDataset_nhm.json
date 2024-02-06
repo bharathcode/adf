@@ -1,0 +1,17 @@
+{
+	"name": "DestinationDataset_nhm",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "log_csv_ADLS_Gen2_Source",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "sampledata"
+			}
+		}
+	}
+}
