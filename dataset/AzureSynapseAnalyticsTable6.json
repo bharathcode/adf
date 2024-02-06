@@ -5,6 +5,9 @@
 			"referenceName": "AzureSynapseAnalytics_log_csv_dedicated_Destination",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "Udemy_DP203"
+		},
 		"annotations": [],
 		"type": "AzureSqlDWTable",
 		"schema": [

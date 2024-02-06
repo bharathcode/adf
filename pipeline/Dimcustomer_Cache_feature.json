@@ -30,10 +30,14 @@
 						"coreCount": 8,
 						"computeType": "General"
 					},
-					"traceLevel": "Fine"
+					"traceLevel": "Fine",
+					"sourceStagingConcurrency": 1
 				}
 			}
 		],
+		"folder": {
+			"name": "Udemy_dp203"
+		},
 		"annotations": [],
 		"lastPublishTime": "2024-02-04T17:02:53Z"
 	},
