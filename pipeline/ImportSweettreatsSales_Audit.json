@@ -5,7 +5,14 @@
 			{
 				"name": "ImportSalesData",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "LookuprunsequenceNumber",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -23,9 +30,9 @@
 								"value": "$$FILEPATH"
 							},
 							{
-								"name": "PipelineRunId",
+								"name": "RunSeqNo",
 								"value": {
-									"value": "@pipeline().RunId",
+									"value": "@activity('LookuprunsequenceNumber').output.firstRow.RunSeqNo\n",
 									"type": "Expression"
 								}
 							}
@@ -116,17 +123,6 @@
 							},
 							{
 								"source": {
-									"name": "PipelineRunId",
-									"type": "String"
-								},
-								"sink": {
-									"name": "PipelineRunId",
-									"type": "Guid",
-									"physicalType": "uniqueidentifier"
-								}
-							},
-							{
-								"source": {
 									"name": "SourceFileName",
 									"type": "String"
 								},
@@ -134,6 +130,17 @@
 									"name": "SourceFileName",
 									"type": "String",
 									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "RunSeqNo",
+									"type": "String"
+								},
+								"sink": {
+									"name": "RunSeqNo",
+									"type": "Int32",
+									"physicalType": "int"
 								}
 							}
 						],
@@ -177,21 +184,14 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "[dbo].[LogPipelineExecution]",
+					"storedProcedureName": "[dbo].[LogPipelineEnd]",
 					"storedProcedureParameters": {
 						"FilesRead": {
 							"value": {
-								"value": "@activity('ImportSalesData').output.filesRead",
+								"value": "@activity('ImportSalesData').output",
 								"type": "Expression"
 							},
 							"type": "Int32"
-						},
-						"PipelineRunId": {
-							"value": {
-								"value": "@pipeline().RunId",
-								"type": "Expression"
-							},
-							"type": "Guid"
 						},
 						"RowsCopied": {
 							"value": "",
@@ -207,12 +207,64 @@
 								"type": "Expression"
 							},
 							"type": "DateTime"
+						},
+						"RunSeqNo": {
+							"value": {
+								"value": "@activity('LookuprunsequenceNumber').output.firstRow.RunSeqNo",
+								"type": "Expression"
+							},
+							"type": "Int32"
+						},
+						"RunStatus": {
+							"value": "Success",
+							"type": "String"
 						}
 					}
 				},
 				"linkedServiceName": {
 					"referenceName": "dp203sqldatabase",
 					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "LookuprunsequenceNumber",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderStoredProcedureName": "[dbo].[LogPipelineStart]",
+						"storedProcedureParameters": {
+							"PipelineRunId": {
+								"type": "Guid",
+								"value": {
+									"value": "@pipeline().RunId",
+									"type": "Expression"
+								}
+							},
+							"RunStartDateTime": {
+								"type": "DateTime",
+								"value": {
+									"value": "@utcnow()",
+									"type": "Expression"
+								}
+							}
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "ASQL_salesLoad",
+						"type": "DatasetReference"
+					}
 				}
 			}
 		],
