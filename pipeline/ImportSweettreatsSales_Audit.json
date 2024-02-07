@@ -249,6 +249,13 @@
 						"type": "AzureSqlSource",
 						"sqlReaderStoredProcedureName": "[dbo].[LogPipelineStart]",
 						"storedProcedureParameters": {
+							"Comments": {
+								"type": "String",
+								"value": {
+									"value": "concat('Pipeline ',pipeline().Pipeline,' executed in ',pipeline().DataFactory)",
+									"type": "Expression"
+								}
+							},
 							"PipelineRunId": {
 								"type": "Guid",
 								"value": {
