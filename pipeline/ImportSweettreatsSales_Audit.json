@@ -7,7 +7,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "LookuprunsequenceNumber",
+						"activity": "SetRunSeqNo",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -32,7 +32,7 @@
 							{
 								"name": "RunSeqNo",
 								"value": {
-									"value": "@activity('LookuprunsequenceNumber').output.firstRow.RunSeqNo\n",
+									"value": "@variables('RunSeqNo')",
 									"type": "Expression"
 								}
 							}
@@ -188,17 +188,23 @@
 					"storedProcedureParameters": {
 						"FilesRead": {
 							"value": {
-								"value": "@activity('ImportSalesData').output",
+								"value": "@activity('ImportSalesData').output.filesRead\n",
 								"type": "Expression"
 							},
 							"type": "Int32"
 						},
 						"RowsCopied": {
-							"value": "",
+							"value": {
+								"value": "@activity('ImportSalesData').output.rowsCopied\n",
+								"type": "Expression"
+							},
 							"type": "Int32"
 						},
 						"RowsRead": {
-							"value": "",
+							"value": {
+								"value": "@activity('ImportSalesData').output.rowsRead\n",
+								"type": "Expression"
+							},
 							"type": "Int32"
 						},
 						"RunEndDateTime": {
@@ -210,7 +216,7 @@
 						},
 						"RunSeqNo": {
 							"value": {
-								"value": "@activity('LookuprunsequenceNumber').output.firstRow.RunSeqNo",
+								"value": "@variables('RunSeqNo')",
 								"type": "Expression"
 							},
 							"type": "Int32"
@@ -266,8 +272,38 @@
 						"type": "DatasetReference"
 					}
 				}
+			},
+			{
+				"name": "SetRunSeqNo",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "LookuprunsequenceNumber",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "RunSeqNo",
+					"value": {
+						"value": "@string(activity('LookuprunsequenceNumber').output.firstRow.RunSeqNo)",
+						"type": "Expression"
+					}
+				}
 			}
 		],
+		"variables": {
+			"RunSeqNo": {
+				"type": "String",
+				"defaultValue": "-1"
+			}
+		},
 		"folder": {
 			"name": "RichardSwinBank/Chapter4"
 		},
