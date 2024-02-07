@@ -1,0 +1,68 @@
+{
+	"name": "ABS_par_HandyCandy",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "RichardSwinbank_book/Chapter3"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Handycandy.parquet",
+				"container": "parquet"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "Correlationid",
+				"type": "UTF8"
+			},
+			{
+				"name": "Operationname",
+				"type": "UTF8"
+			},
+			{
+				"name": "Status",
+				"type": "UTF8"
+			},
+			{
+				"name": "Eventcategory",
+				"type": "UTF8"
+			},
+			{
+				"name": "Level",
+				"type": "UTF8"
+			},
+			{
+				"name": "Time",
+				"type": "INT96"
+			},
+			{
+				"name": "Subscription",
+				"type": "UTF8"
+			},
+			{
+				"name": "Eventinitiatedby",
+				"type": "UTF8"
+			},
+			{
+				"name": "Resourcetype",
+				"type": "UTF8"
+			},
+			{
+				"name": "Resourcegroup",
+				"type": "UTF8"
+			},
+			{
+				"name": "Resource",
+				"type": "UTF8"
+			}
+		]
+	}
+}
