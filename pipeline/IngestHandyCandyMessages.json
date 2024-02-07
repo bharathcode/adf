@@ -38,7 +38,53 @@
 							"type": "ParquetWriteSettings"
 						}
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['TransactionId']"
+								},
+								"sink": {
+									"name": "TransactionId"
+								}
+							},
+							{
+								"source": {
+									"path": "$['TransactionDate']"
+								},
+								"sink": {
+									"name": "TransactionDate"
+								}
+							},
+							{
+								"source": {
+									"path": "$['StoreId']"
+								},
+								"sink": {
+									"name": "StoreId"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Items'][0]['Product']"
+								},
+								"sink": {
+									"name": "Product"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Items'][0]['Price']"
+								},
+								"sink": {
+									"name": "Price"
+								}
+							}
+						],
+						"collectionReference": "$['Items']"
+					}
 				},
 				"inputs": [
 					{
