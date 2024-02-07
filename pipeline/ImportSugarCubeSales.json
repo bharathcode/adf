@@ -94,7 +94,8 @@
 								}
 							}
 						],
-						"collectionReference": "$['Sales']"
+						"collectionReference": "$['Sales']",
+						"mapComplexValuesToString": false
 					}
 				},
 				"inputs": [
