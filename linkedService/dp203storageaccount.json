@@ -1,0 +1,10 @@
+{
+	"name": "dp203storageaccount",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://dp203storageaccountlink.vault.azure.net/"
+		}
+	}
+}
