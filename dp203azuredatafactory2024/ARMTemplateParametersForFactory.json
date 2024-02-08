@@ -5,6 +5,9 @@
 		"factoryName": {
 			"value": "dp203azuredatafactory2024"
 		},
+		"AzureBlobStorage_connectionString": {
+			"value": ""
+		},
 		"AzureSynapseAnalytics_log_csv_dedicated_Destination_connectionString": {
 			"value": ""
 		},
