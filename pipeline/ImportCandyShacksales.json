@@ -76,13 +76,6 @@
 								}
 							},
 							{
-								"sink": {
-									"name": "ManufacturerProductCode",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
 								"source": {
 									"name": "SalesValue",
 									"type": "String",
