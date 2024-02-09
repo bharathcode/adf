@@ -1,0 +1,22 @@
+{
+	"name": "AnyblobStorage",
+	"properties": {
+		"parameters": {
+			"ConnectionSecret": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"type": "AzureBlobStorage",
+		"typeProperties": {
+			"connectionString": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "dp203storageaccount",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "@linkedService().ConnectionSecret"
+			}
+		}
+	}
+}
