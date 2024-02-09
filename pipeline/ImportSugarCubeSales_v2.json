@@ -20,6 +20,8 @@
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
+							"wildcardFolderPath": "azure-data-factory-by-example-main/SampleData/SugarCube",
+							"wildcardFileName": "*.json",
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
@@ -101,9 +103,7 @@
 						"referenceName": "ABS_Json_dp203stogareaccount_usingkeyvault",
 						"type": "DatasetReference",
 						"parameters": {
-							"Container": "sampledata",
-							"Directory": "azure-data-factory-by-example-main/SampleData/SugarCube/",
-							"File": "*.json"
+							"Container": "sampledata"
 						}
 					}
 				],
