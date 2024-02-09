@@ -104,7 +104,6 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"Container": "sampledata",
-							"Directory": ".",
 							"File": "."
 						}
 					}
