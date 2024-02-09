@@ -38,7 +38,7 @@
 							}
 						],
 						"storeSettings": {
-							"type": "AzureBlobFSReadSettings",
+							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
 							"wildcardFolderPath": {
 								"value": "@pipeline().parameters.Wildcardfolderpath",
@@ -159,8 +159,14 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "ADLSGen2_CSV_SweetTreats",
-						"type": "DatasetReference"
+						"referenceName": "ABS_CSV",
+						"type": "DatasetReference",
+						"parameters": {
+							"Container": "sampledata",
+							"Directory": ".",
+							"File": ".",
+							"LinkedServiceConnectionSecret": "dp203storageaccountconnectionstring"
+						}
 					}
 				],
 				"outputs": [
