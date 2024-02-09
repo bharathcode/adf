@@ -1,0 +1,113 @@
+{
+	"name": "IngestHandyCandyMessages_V2",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "JsonSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"wildcardFolderPath": "azure-data-factory-by-example-main/SampleData/HandyCandy",
+							"wildcardFileName": "*.json",
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "JsonReadSettings"
+						}
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings",
+							"copyBehavior": "MergeFiles"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['TransactionId']"
+								},
+								"sink": {
+									"name": "TransactionId"
+								}
+							},
+							{
+								"source": {
+									"path": "$['TransactionDate']"
+								},
+								"sink": {
+									"name": "TransactionDate"
+								}
+							},
+							{
+								"source": {
+									"path": "$['StoreId']"
+								},
+								"sink": {
+									"name": "StoreId"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Items'][0]['Product']"
+								},
+								"sink": {
+									"name": "Product"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Items'][0]['Price']"
+								},
+								"sink": {
+									"name": "Price"
+								}
+							}
+						],
+						"collectionReference": "$['Items']"
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ABS_Json_dp203stogareaccount_usingkeyvault",
+						"type": "DatasetReference",
+						"parameters": {
+							"Container": "sampledata",
+							"Directory": ".",
+							"File": "."
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ABS_par_HandyCandy",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "RichardSwinBank/Chapter5"
+		},
+		"annotations": []
+	}
+}
