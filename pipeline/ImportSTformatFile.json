@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Lookup1",
+				"name": "LookuprunsequenceNumber",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -51,11 +51,11 @@
 				}
 			},
 			{
-				"name": "Set variable1",
+				"name": "SetRunSeqNo",
 				"type": "SetVariable",
 				"dependsOn": [
 					{
-						"activity": "Lookup1",
+						"activity": "LookuprunsequenceNumber",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -69,17 +69,17 @@
 				"typeProperties": {
 					"variableName": "Runseqno",
 					"value": {
-						"value": "@string(activity('Lookup1').output.firstRow.RunSeqNo)\n",
+						"value": "@activity('LookuprunsequenceNumber').output.firstRow.RunSeqNo",
 						"type": "Expression"
 					}
 				}
 			},
 			{
-				"name": "Copy data1",
+				"name": "ImportSalesData",
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Set variable1",
+						"activity": "SetRunSeqNo",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -247,11 +247,11 @@
 				]
 			},
 			{
-				"name": "Stored procedure1",
+				"name": "LogPiplelineOutcome",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
-						"activity": "Copy data1",
+						"activity": "ImportSalesData",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -270,21 +270,21 @@
 					"storedProcedureParameters": {
 						"FilesRead": {
 							"value": {
-								"value": "@activity('Copy data1').output.filesRead",
+								"value": "@activity('ImportSalesData').output.filesRead",
 								"type": "Expression"
 							},
 							"type": "Int32"
 						},
 						"RowsCopied": {
 							"value": {
-								"value": "@activity('Copy data1').output.rowsCopied",
+								"value": "@activity('ImportSalesData').output.rowsCopied",
 								"type": "Expression"
 							},
 							"type": "Int32"
 						},
 						"RowsRead": {
 							"value": {
-								"value": "@activity('Copy data1').output.rowsRead",
+								"value": "@activity('ImportSalesData').output.rowsRead",
 								"type": "Expression"
 							},
 							"type": "Int32"
