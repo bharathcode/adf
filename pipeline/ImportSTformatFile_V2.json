@@ -305,7 +305,7 @@
 						},
 						"RunStatus": {
 							"value": {
-								"value": "@if(equals(activity('ImportSalesData').output.status,'Failed'),'Failed','Success')",
+								"value": "@if(equals(activity('ImportSalesData').output.executionDetails[0].status,'Failed'),'Failed','Success')",
 								"type": "Expression"
 							},
 							"type": "String"
