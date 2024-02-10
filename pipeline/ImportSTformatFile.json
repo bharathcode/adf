@@ -322,7 +322,7 @@
 			},
 			"File": {
 				"type": "string",
-				"defaultValue": "NBN-202004.csv"
+				"defaultValue": "NBN-202006.csv"
 			}
 		},
 		"variables": {
