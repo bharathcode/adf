@@ -1,5 +1,5 @@
 {
-	"name": "pipeline1",
+	"name": "ImportSTformatFile",
 	"properties": {
 		"activities": [
 			{
@@ -22,7 +22,7 @@
 							"Comments": {
 								"type": "String",
 								"value": {
-									"value": "Pipeline @{pipeline().Pipeline} executed in @{pipeline().DataFactory}",
+									"value": "Pipeline @{pipeline().Pipeline} executed in @{pipeline().DataFactory} - loading file @{pipeline().parameters.Directory}/@{pipeline().parameters.File}",
 									"type": "Expression"
 								}
 							},
@@ -318,11 +318,11 @@
 		"parameters": {
 			"Directory": {
 				"type": "string",
-				"defaultValue": "azure-data-factory-by-example-main/SampleData/SweetTreats/Apr-20"
+				"defaultValue": "azure-data-factory-by-example-main/SampleData/NaughtyButNice"
 			},
 			"File": {
 				"type": "string",
-				"defaultValue": "Sales.csv"
+				"defaultValue": "NBN-202004.csv"
 			}
 		},
 		"variables": {
