@@ -1,0 +1,25 @@
+{
+	"name": "AzureSQLDB",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dp203sqldatabase",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"Schema": {
+				"type": "string",
+				"defaultValue": "dbo"
+			},
+			"Table": {
+				"type": "string",
+				"defaultValue": "LoadingError"
+			}
+		},
+		"folder": {
+			"name": "RichardSwinbank_book/Chapter6"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	}
+}
