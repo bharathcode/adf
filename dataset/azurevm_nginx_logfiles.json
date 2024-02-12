@@ -1,10 +1,6 @@
 {
 	"name": "azurevm_nginx_logfiles",
 	"properties": {
-		"linkedServiceName": {
-			"referenceName": "azurevm",
-			"type": "LinkedServiceReference"
-		},
 		"folder": {
 			"name": "Udemy_DP203"
 		},

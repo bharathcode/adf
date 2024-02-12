@@ -5,7 +5,14 @@
 			{
 				"name": "ImportSalesdata",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "RunSeqno",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -101,8 +108,16 @@
 						"referenceName": "ABS_Json",
 						"type": "DatasetReference",
 						"parameters": {
-							"Directory": ".",
-							"File": "."
+							"Container": "sampledata",
+							"Directory": {
+								"value": "@pipeline().parameters.Directory",
+								"type": "Expression"
+							},
+							"File": {
+								"value": "@pipeline().parameters.File",
+								"type": "Expression"
+							},
+							"LinkedServiceConnectionSecret": "dp203storageaccountconnectionstring"
 						}
 					}
 				],
@@ -133,15 +148,23 @@
 							"Comments": {
 								"type": "String",
 								"value": {
-									"value": "@{pipeline().Pipeline} executed in @{pipeline().DataFactory} - loading file azure-data-factory-by-example-main/SampleData/NaughtyButNice/NBN-202006.csv",
+									"value": "@{pipeline().Pipeline} executed in @{pipeline().DataFactory} - loading file @{pipeline().parameters.Directory}/@{pipeline().parameters.File}",
 									"type": "Expression"
 								}
 							},
 							"PipelineRunId": {
-								"type": "Guid"
+								"type": "Guid",
+								"value": {
+									"value": "@pipeline().RunId",
+									"type": "Expression"
+								}
 							},
 							"RunStartDateTime": {
-								"type": "DateTime"
+								"type": "DateTime",
+								"value": {
+									"value": "@utcnow()",
+									"type": "Expression"
+								}
 							}
 						},
 						"queryTimeout": "02:00:00",
@@ -151,6 +174,98 @@
 						"referenceName": "ASQL_salesLoad",
 						"type": "DatasetReference"
 					}
+				}
+			},
+			{
+				"name": "RunSeqno",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "LookupRunSeqNo",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "RunSeqno",
+					"value": {
+						"value": "@string(activity('LookupRunSeqNo').output.firstRow.RunSeqNo)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Stored procedure1",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "ImportSalesdata",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[LogPipelineEnd]",
+					"storedProcedureParameters": {
+						"FilesRead": {
+							"value": {
+								"value": "@activity('ImportSalesdata').output.filesRead\n",
+								"type": "Expression"
+							},
+							"type": "Int32"
+						},
+						"RowsCopied": {
+							"value": {
+								"value": "@activity('ImportSalesdata').output.rowsCopied\n",
+								"type": "Expression"
+							},
+							"type": "Int32"
+						},
+						"RowsRead": {
+							"value": {
+								"value": "@activity('ImportSalesdata').output.rowsRead\n",
+								"type": "Expression"
+							},
+							"type": "Int32"
+						},
+						"RunEndDateTime": {
+							"value": {
+								"value": "@utcnow()",
+								"type": "Expression"
+							},
+							"type": "DateTime"
+						},
+						"RunSeqNo": {
+							"value": {
+								"value": "@variables('RunSeqno')",
+								"type": "Expression"
+							},
+							"type": "Int32"
+						},
+						"RunStatus": {
+							"value": "Success",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "dp203sqldatabase",
+					"type": "LinkedServiceReference"
 				}
 			}
 		],
