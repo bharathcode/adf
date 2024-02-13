@@ -419,7 +419,7 @@
 					},
 					"ifTrueActivities": [
 						{
-							"name": "Copy data1",
+							"name": "SkippedRows",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
@@ -464,7 +464,7 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "ABS_CSV",
+									"referenceName": "ABS_CSV_escapecharacer",
 									"type": "DatasetReference",
 									"parameters": {
 										"Container": "errorordiverted",
