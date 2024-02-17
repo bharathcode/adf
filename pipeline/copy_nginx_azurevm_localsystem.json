@@ -18,11 +18,14 @@
 					"source": {
 						"type": "BinarySource",
 						"storeSettings": {
-							"type": "FileServerReadSettings",
+							"type": "AzureBlobFSReadSettings",
 							"recursive": true
 						},
 						"formatSettings": {
-							"type": "BinaryReadSettings"
+							"type": "BinaryReadSettings",
+							"compressionProperties": {
+								"type": "ZipDeflateReadSettings"
+							}
 						}
 					},
 					"sink": {
@@ -35,7 +38,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "azurevm_nginx_logfiles",
+						"referenceName": "SourceDataset_nhm",
 						"type": "DatasetReference"
 					}
 				],
