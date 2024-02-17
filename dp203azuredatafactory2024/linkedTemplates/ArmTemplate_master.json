@@ -11,13 +11,13 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage'"
 		},
+		"AzureBlobStorage2_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage2'"
+		},
 		"AzureSynapseAnalytics_log_csv_dedicated_Destination_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSynapseAnalytics_log_csv_dedicated_Destination'"
-		},
-		"azurevm_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'azurevm'"
 		},
 		"dp203sqldatabase_connectionString": {
 			"type": "secureString",
@@ -27,13 +27,17 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'log_csv_ADLS_Gen2_Source'"
 		},
-		"azurevm_properties_typeProperties_host": {
+		"AnyblobStorage_properties_typeProperties_connectionString_secretName": {
 			"type": "string",
-			"defaultValue": "D:\\nginx-1.24.0\\nginx-1.24.0\\logs"
+			"defaultValue": "@linkedService().ConnectionSecret"
 		},
-		"azurevm_properties_typeProperties_userId": {
+		"dp203stogareaccount_usingkeyvault_properties_typeProperties_connectionString_secretName": {
 			"type": "string",
-			"defaultValue": "aaasadmin"
+			"defaultValue": "dp203storageaccountconnectionstring"
+		},
+		"dp203storageaccount_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://dp203storageaccountlink.vault.azure.net/"
 		},
 		"log_csv_ADLS_Gen2_Source_properties_typeProperties_url": {
 			"type": "string",
@@ -69,6 +73,9 @@
 					"AzureBlobStorage_connectionString": {
 						"value": "[parameters('AzureBlobStorage_connectionString')]"
 					},
+					"AzureBlobStorage2_connectionString": {
+						"value": "[parameters('AzureBlobStorage2_connectionString')]"
+					},
 					"AzureSynapseAnalytics_log_csv_dedicated_Destination_connectionString": {
 						"value": "[parameters('AzureSynapseAnalytics_log_csv_dedicated_Destination_connectionString')]"
 					},
@@ -77,6 +84,9 @@
 					},
 					"log_csv_ADLS_Gen2_Source_accountKey": {
 						"value": "[parameters('log_csv_ADLS_Gen2_Source_accountKey')]"
+					},
+					"dp203storageaccount_properties_typeProperties_baseUrl": {
+						"value": "[parameters('dp203storageaccount_properties_typeProperties_baseUrl')]"
 					},
 					"log_csv_ADLS_Gen2_Source_properties_typeProperties_url": {
 						"value": "[parameters('log_csv_ADLS_Gen2_Source_properties_typeProperties_url')]"
@@ -119,14 +129,11 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"azurevm_password": {
-						"value": "[parameters('azurevm_password')]"
+					"AnyblobStorage_properties_typeProperties_connectionString_secretName": {
+						"value": "[parameters('AnyblobStorage_properties_typeProperties_connectionString_secretName')]"
 					},
-					"azurevm_properties_typeProperties_host": {
-						"value": "[parameters('azurevm_properties_typeProperties_host')]"
-					},
-					"azurevm_properties_typeProperties_userId": {
-						"value": "[parameters('azurevm_properties_typeProperties_userId')]"
+					"dp203stogareaccount_usingkeyvault_properties_typeProperties_connectionString_secretName": {
+						"value": "[parameters('dp203stogareaccount_usingkeyvault_properties_typeProperties_connectionString_secretName')]"
 					}
 				}
 			},
@@ -172,6 +179,26 @@
 			},
 			"dependsOn": [
 				"[resourceId('Microsoft.Resources/deployments', 'dp203azuredatafactory2024_ArmTemplate_3')]"
+			]
+		},
+		{
+			"name": "dp203azuredatafactory2024_ArmTemplate_5",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_5.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'dp203azuredatafactory2024_ArmTemplate_4')]"
 			]
 		}
 	]

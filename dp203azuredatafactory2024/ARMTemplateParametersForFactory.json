@@ -8,10 +8,10 @@
 		"AzureBlobStorage_connectionString": {
 			"value": ""
 		},
-		"AzureSynapseAnalytics_log_csv_dedicated_Destination_connectionString": {
+		"AzureBlobStorage2_connectionString": {
 			"value": ""
 		},
-		"azurevm_password": {
+		"AzureSynapseAnalytics_log_csv_dedicated_Destination_connectionString": {
 			"value": ""
 		},
 		"dp203sqldatabase_connectionString": {
@@ -20,11 +20,14 @@
 		"log_csv_ADLS_Gen2_Source_accountKey": {
 			"value": ""
 		},
-		"azurevm_properties_typeProperties_host": {
-			"value": "D:\\nginx-1.24.0\\nginx-1.24.0\\logs"
+		"AnyblobStorage_properties_typeProperties_connectionString_secretName": {
+			"value": "@linkedService().ConnectionSecret"
 		},
-		"azurevm_properties_typeProperties_userId": {
-			"value": "aaasadmin"
+		"dp203stogareaccount_usingkeyvault_properties_typeProperties_connectionString_secretName": {
+			"value": "dp203storageaccountconnectionstring"
+		},
+		"dp203storageaccount_properties_typeProperties_baseUrl": {
+			"value": "https://dp203storageaccountlink.vault.azure.net/"
 		},
 		"log_csv_ADLS_Gen2_Source_properties_typeProperties_url": {
 			"value": "https://dp203storageaccount2024.dfs.core.windows.net/"
