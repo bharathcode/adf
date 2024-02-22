@@ -2051,7 +2051,16 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"storedProcedureName": "[[dbo].[PersistLoadedSales]"
+							"storedProcedureName": "[[dbo].[PersistLoadedSales]",
+							"storedProcedureParameters": {
+								"runSeqNo": {
+									"value": {
+										"value": "@variables('Runseqno')",
+										"type": "Expression"
+									},
+									"type": "Int32"
+								}
+							}
 						},
 						"linkedServiceName": {
 							"referenceName": "dp203sqldatabase",
@@ -2522,7 +2531,7 @@
 									"userProperties": [],
 									"typeProperties": {
 										"pipeline": {
-											"referenceName": "ImportSTformatFile_Divert",
+											"referenceName": "ImportSTformatFile_Divert_Persist",
 											"type": "PipelineReference"
 										},
 										"waitOnCompletion": true,
@@ -2558,7 +2567,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ABS_CSV')]",
-				"[concat(variables('factoryId'), '/pipelines/ImportSTformatFile_Divert')]"
+				"[concat(variables('factoryId'), '/pipelines/ImportSTformatFile_Divert_Persist')]"
 			]
 		},
 		{
@@ -4400,6 +4409,128 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ABS_Json_dp203stogareaccount_usingkeyvault')]",
 				"[concat(variables('factoryId'), '/datasets/ABS_par_HandyCandy')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LoadJollygoodsales')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "LookupRunSeqNo",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderStoredProcedureName": "[[dbo].[LogPipelineStart]",
+								"storedProcedureParameters": {
+									"Comments": {
+										"type": "String",
+										"value": {
+											"value": "Pipeline @{pipeline().Pipeline} executed in @{pipeline().DataFactory} - loading file @{pipeline().parameters.Directory}/@{pipeline().parameters.File}",
+											"type": "Expression"
+										}
+									},
+									"PipelineRunId": {
+										"type": "Guid",
+										"value": {
+											"value": "@pipeline().RunId",
+											"type": "Expression"
+										}
+									},
+									"RunStartDateTime": {
+										"type": "DateTime",
+										"value": {
+											"value": "@utcNow()",
+											"type": "Expression"
+										}
+									}
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "ASQL_salesLoad",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Data flow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "LookupRunSeqNo",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "TransformJollyGoodSales",
+								"type": "DataFlowReference",
+								"parameters": {
+									"RunSeqNo": {
+										"value": "@int(activity('LookupRunSeqNo').output.firstRow.RunSeqNo)",
+										"type": "Expression"
+									}
+								},
+								"datasetParameters": {
+									"JollyGoodSales": {},
+									"ExchangeRate": {},
+									"SalesLOAD": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"Directory": {
+						"type": "string",
+						"defaultValue": "azure-data-factory-by-example-main/SampleData/JollyGood"
+					},
+					"File": {
+						"type": "string",
+						"defaultValue": "Sales Apr-Sep 2020.xlsx"
+					}
+				},
+				"folder": {
+					"name": "RichardSwinBank/Chapter7"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ASQL_salesLoad')]",
+				"[concat(variables('factoryId'), '/dataflows/TransformJollyGoodSales')]"
 			]
 		},
 		{
@@ -8358,6 +8489,15 @@
 						"name": "UnitsSold",
 						"type": "int",
 						"precision": 10
+					},
+					{
+						"name": "SourceFileName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "RunSeqNo",
+						"type": "int",
+						"precision": 10
 					}
 				],
 				"typeProperties": {
@@ -9641,6 +9781,54 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Excel1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "SALES",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Sales Apr-Sep 2020.xlsx",
+						"folderPath": "azure-data-factory-by-example-main/SampleData/JollyGood",
+						"container": "sampledata"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Period",
+						"type": "String"
+					},
+					{
+						"name": "Product",
+						"type": "String"
+					},
+					{
+						"name": "Unit Price",
+						"type": "String"
+					},
+					{
+						"name": "Currency",
+						"type": "String"
+					},
+					{
+						"name": "Units Sold",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Json1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -10907,6 +11095,145 @@
 				"typeProperties": {}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TransformJollyGoodSales')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "RichardSwinBank/Chapter7"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Excel1",
+								"type": "DatasetReference"
+							},
+							"name": "JollyGoodSales"
+						},
+						{
+							"linkedService": {
+								"referenceName": "AzureBlobStorage",
+								"type": "LinkedServiceReference"
+							},
+							"name": "ExchangeRate"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "ASQL_salesLoad",
+								"type": "DatasetReference"
+							},
+							"name": "SalesLOAD"
+						}
+					],
+					"transformations": [
+						{
+							"name": "Excludetotalsalesrows"
+						},
+						{
+							"name": "converstiontoUSD"
+						},
+						{
+							"name": "conversionRates"
+						},
+						{
+							"name": "Totalsales"
+						},
+						{
+							"name": "select1"
+						}
+					],
+					"scriptLines": [
+						"parameters{",
+						"     RunSeqNo as integer (-1)",
+						"}",
+						"source(output(",
+						"          Period as date,",
+						"          Product as string,",
+						"          {Unit Price} as double,",
+						"          Currency as string,",
+						"          {Units Sold} as integer",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> JollyGoodSales",
+						"source(output(",
+						"          FromCurrency as string,",
+						"          ToCurrency as string,",
+						"          Date as date,",
+						"          ExchangeRate as double",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false,",
+						"     format: 'excel',",
+						"     container: 'sampledata',",
+						"     folderPath: 'azure-data-factory-by-example-main/SampleData',",
+						"     fileName: 'ExchangeRates.xlsx',",
+						"     sheetName: 'Sheet1',",
+						"     firstRowAsHeader: true) ~> ExchangeRate",
+						"JollyGoodSales filter(Product != \"Month Total\") ~> Excludetotalsalesrows",
+						"ExchangeRate filter(ToCurrency == \"USD\") ~> converstiontoUSD",
+						"Excludetotalsalesrows, converstiontoUSD lookup(Currency == FromCurrency",
+						"     && Period == Date,",
+						"     multiple: false,",
+						"     pickup: 'any',",
+						"     broadcast: 'auto')~> conversionRates",
+						"conversionRates derive(SalesValueUSD = {Unit Price} * {Units Sold} * ExchangeRate,",
+						"          Retailer = \"Jolly Good Ltd\",",
+						"          RunSeqNo = $RunSeqNo) ~> Totalsales",
+						"Totalsales select(mapColumn(",
+						"          SalesMonth = Period,",
+						"          Product,",
+						"          SalesValueUSD,",
+						"          Retailer,",
+						"          RunSeqNo,",
+						"          UnitsSold = {Units Sold}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select1",
+						"select1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          RowId as integer,",
+						"          Retailer as string,",
+						"          SalesMonth as date,",
+						"          Product as string,",
+						"          ManufacturerProductCode as string,",
+						"          SalesValueUSD as decimal(18,2),",
+						"          UnitsSold as integer,",
+						"          SourceFileName as string,",
+						"          RunSeqNo as integer",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          Retailer,",
+						"          SalesMonth,",
+						"          Product,",
+						"          SalesValueUSD,",
+						"          UnitsSold,",
+						"          RunSeqNo",
+						"     )) ~> SalesLOAD"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Excel1')]",
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage')]",
+				"[concat(variables('factoryId'), '/datasets/ASQL_salesLoad')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/copy_nginxfiles_to_dedicateSQLpool')]",
