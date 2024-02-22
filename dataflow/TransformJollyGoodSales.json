@@ -16,7 +16,11 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "Excludetotalsalesrows"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          Period as date,",
@@ -27,7 +31,8 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> JollyGoodSales"
+				"     ignoreNoFilesFound: false) ~> JollyGoodSales",
+				"JollyGoodSales filter(Product != \"Month Total\") ~> Excludetotalsalesrows"
 			]
 		}
 	}
