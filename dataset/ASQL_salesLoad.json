@@ -42,6 +42,15 @@
 				"name": "UnitsSold",
 				"type": "int",
 				"precision": 10
+			},
+			{
+				"name": "SourceFileName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "RunSeqNo",
+				"type": "int",
+				"precision": 10
 			}
 		],
 		"typeProperties": {
