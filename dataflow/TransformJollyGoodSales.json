@@ -1,16 +1,33 @@
 {
-	"name": "ransformJollyGoodSales",
+	"name": "TransformJollyGoodSales",
 	"properties": {
 		"folder": {
 			"name": "RichardSwinBank/Chapter7"
 		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
-			"sources": [],
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Excel1",
+						"type": "DatasetReference"
+					},
+					"name": "JollyGoodSales"
+				}
+			],
 			"sinks": [],
 			"transformations": [],
 			"scriptLines": [
-				""
+				"source(output(",
+				"          Period as date,",
+				"          Product as string,",
+				"          {Unit Price} as double,",
+				"          Currency as string,",
+				"          {Units Sold} as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> JollyGoodSales"
 			]
 		}
 	}
