@@ -1,0 +1,17 @@
+{
+	"name": "ransformJollyGoodSales",
+	"properties": {
+		"folder": {
+			"name": "RichardSwinBank/Chapter7"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				""
+			]
+		}
+	}
+}
