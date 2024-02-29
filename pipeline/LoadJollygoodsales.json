@@ -150,11 +150,11 @@
 							"type": "Int32"
 						},
 						"RowsCopied": {
-							"value": "",
+							"value": null,
 							"type": "Int32"
 						},
 						"RowsRead": {
-							"value": "",
+							"value": null,
 							"type": "Int32"
 						},
 						"RunEndDateTime": {
@@ -172,7 +172,7 @@
 							"type": "Int32"
 						},
 						"RunStatus": {
-							"value": "Success",
+							"value": null,
 							"type": "String"
 						}
 					}
