@@ -12,7 +12,7 @@
 						"referenceName": "AzureSQLDB",
 						"type": "DatasetReference"
 					},
-					"name": "source1"
+					"name": "SourceConnection"
 				}
 			],
 			"sinks": [],
@@ -21,7 +21,7 @@
 				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source1"
+				"     format: 'table') ~> SourceConnection"
 			]
 		}
 	}
