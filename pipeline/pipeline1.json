@@ -1,0 +1,9 @@
+{
+	"name": "pipeline1",
+	"properties": {
+		"folder": {
+			"name": "RichardSwinBank/Chapter7"
+		},
+		"annotations": []
+	}
+}
