@@ -12,7 +12,7 @@
 			},
 			"Table": {
 				"type": "string",
-				"defaultValue": "LoadingError"
+				"defaultValue": "Sales"
 			}
 		},
 		"folder": {
