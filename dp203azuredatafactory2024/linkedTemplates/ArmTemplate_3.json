@@ -3348,7 +3348,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/TransformJollyGoodSales')]",
+			"name": "[concat(parameters('factoryName'), '/ProductUpdate')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -3360,107 +3360,76 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "Excel1",
+								"referenceName": "AzureSQLDB",
 								"type": "DatasetReference"
 							},
-							"name": "JollyGoodSales"
+							"name": "source1"
 						},
 						{
-							"linkedService": {
-								"referenceName": "AzureBlobStorage",
-								"type": "LinkedServiceReference"
+							"dataset": {
+								"referenceName": "AzureSQLDB",
+								"type": "DatasetReference"
 							},
-							"name": "ExchangeRate"
+							"name": "CheckthdatainProductTable"
 						}
 					],
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "ASQL_salesLoad",
+								"referenceName": "AzureSQLDB",
 								"type": "DatasetReference"
 							},
-							"name": "SalesLOAD"
+							"name": "dboProduct"
 						}
 					],
 					"transformations": [
 						{
-							"name": "Excludetotalsalesrows"
+							"name": "GetDifferentColumns"
 						},
 						{
-							"name": "converstiontoUSD"
+							"name": "EliminateDuplicates"
 						},
 						{
-							"name": "conversionRates"
-						},
-						{
-							"name": "Totalsales"
-						},
-						{
-							"name": "select1"
+							"name": "exists1"
 						}
 					],
 					"scriptLines": [
-						"parameters{",
-						"     RunSeqNo as integer (-1)",
-						"}",
 						"source(output(",
-						"          Period as date,",
-						"          Product as string,",
-						"          {Unit Price} as double,",
-						"          Currency as string,",
-						"          {Units Sold} as integer",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false) ~> JollyGoodSales",
-						"source(output(",
-						"          FromCurrency as string,",
-						"          ToCurrency as string,",
-						"          Date as date,",
-						"          ExchangeRate as double",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false,",
-						"     format: 'excel',",
-						"     container: 'sampledata',",
-						"     folderPath: 'azure-data-factory-by-example-main/SampleData',",
-						"     fileName: 'ExchangeRates.xlsx',",
-						"     sheetName: 'Sheet1',",
-						"     firstRowAsHeader: true) ~> ExchangeRate",
-						"JollyGoodSales filter(Product != \"Month Total\") ~> Excludetotalsalesrows",
-						"ExchangeRate filter(ToCurrency == \"USD\") ~> converstiontoUSD",
-						"Excludetotalsalesrows, converstiontoUSD lookup(Currency == FromCurrency",
-						"     && Period == Date,",
-						"     multiple: false,",
-						"     pickup: 'any',",
-						"     broadcast: 'auto')~> conversionRates",
-						"conversionRates derive(SalesValueUSD = {Unit Price} * {Units Sold} * ExchangeRate,",
-						"          Retailer = \"Jolly Good Ltd\",",
-						"          RunSeqNo = $RunSeqNo) ~> Totalsales",
-						"Totalsales select(mapColumn(",
-						"          SalesMonth = Period,",
-						"          Product,",
-						"          SalesValueUSD,",
-						"          Retailer,",
-						"          RunSeqNo,",
-						"          UnitsSold = {Units Sold}",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> select1",
-						"select1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
 						"          RowId as integer,",
 						"          Retailer as string,",
 						"          SalesMonth as date,",
 						"          Product as string,",
-						"          ManufacturerProductCode as string,",
-						"          SalesValueUSD as decimal(18,2),",
+						"          SalesValueUSD as decimal(19,2),",
 						"          UnitsSold as integer,",
-						"          SourceFileName as string,",
 						"          RunSeqNo as integer",
 						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"source(output(",
+						"          Product as string,",
+						"          ProductName as string,",
+						"          WeightInOunces as decimal(19,2),",
+						"          WeightInGrams as decimal(19,2)",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> CheckthdatainProductTable",
+						"source1 derive(ProductName = trim(left(Product, length(Product) -length(:WeightString))),",
+						"          WeightInOunces = toFloat(replace(:WeightString, :WeightUnit, ''))/iif(:WeightUnit=='g',28.3495,1.0),",
+						"          WeightInGrams = multiply(toFloat(replace(:WeightString, :WeightUnit, '')),iif(:WeightUnit=='oz',28.3495,1.0)),",
+						"          WeightString := right(Product,locate(' ',reverse(Product))-1),",
+						"          WeightUnit := iif(endsWith(Product, 'oz'),'oz','g')) ~> GetDifferentColumns",
+						"GetDifferentColumns aggregate(groupBy(Product),",
+						"     ProductName = first(ProductName),",
+						"          each(match(startsWith(name,'Weight')), $$ = first($$))) ~> EliminateDuplicates",
+						"EliminateDuplicates, CheckthdatainProductTable exists(EliminateDuplicates@Product == CheckthdatainProductTable@Product,",
+						"     negate:true,",
+						"     broadcast: 'auto')~> exists1",
+						"exists1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
 						"     deletable:false,",
 						"     insertable:true,",
 						"     updateable:false,",
@@ -3470,13 +3439,11 @@
 						"     skipDuplicateMapOutputs: true,",
 						"     errorHandlingOption: 'stopOnFirstError',",
 						"     mapColumn(",
-						"          Retailer,",
-						"          SalesMonth,",
 						"          Product,",
-						"          SalesValueUSD,",
-						"          UnitsSold,",
-						"          RunSeqNo",
-						"     )) ~> SalesLOAD"
+						"          ProductName,",
+						"          WeightInOunces,",
+						"          WeightInGrams",
+						"     )) ~> dboProduct"
 					]
 				}
 			},

@@ -4738,6 +4738,65 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/ProductPopulation')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Data flow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "ProductUpdate",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {
+										"Schema": "dbo",
+										"Table": "Sales"
+									},
+									"CheckthdatainProductTable": {
+										"Schema": "dbo",
+										"Table": "Product"
+									},
+									"dboProduct": {
+										"Schema": "dbo",
+										"Table": "Product"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "RichardSwinBank/Chapter7"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/ProductUpdate')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/RSBook_copyzipfiles_unzipthem')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -8621,7 +8680,7 @@
 					},
 					"Table": {
 						"type": "string",
-						"defaultValue": "LoadingError"
+						"defaultValue": "Sales"
 					}
 				},
 				"folder": {
@@ -11191,6 +11250,110 @@
 				"typeProperties": {}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ProductUpdate')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "RichardSwinBank/Chapter7"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "AzureSQLDB",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						},
+						{
+							"dataset": {
+								"referenceName": "AzureSQLDB",
+								"type": "DatasetReference"
+							},
+							"name": "CheckthdatainProductTable"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "AzureSQLDB",
+								"type": "DatasetReference"
+							},
+							"name": "dboProduct"
+						}
+					],
+					"transformations": [
+						{
+							"name": "GetDifferentColumns"
+						},
+						{
+							"name": "EliminateDuplicates"
+						},
+						{
+							"name": "exists1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          RowId as integer,",
+						"          Retailer as string,",
+						"          SalesMonth as date,",
+						"          Product as string,",
+						"          SalesValueUSD as decimal(19,2),",
+						"          UnitsSold as integer,",
+						"          RunSeqNo as integer",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"source(output(",
+						"          Product as string,",
+						"          ProductName as string,",
+						"          WeightInOunces as decimal(19,2),",
+						"          WeightInGrams as decimal(19,2)",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> CheckthdatainProductTable",
+						"source1 derive(ProductName = trim(left(Product, length(Product) -length(:WeightString))),",
+						"          WeightInOunces = toFloat(replace(:WeightString, :WeightUnit, ''))/iif(:WeightUnit=='g',28.3495,1.0),",
+						"          WeightInGrams = multiply(toFloat(replace(:WeightString, :WeightUnit, '')),iif(:WeightUnit=='oz',28.3495,1.0)),",
+						"          WeightString := right(Product,locate(' ',reverse(Product))-1),",
+						"          WeightUnit := iif(endsWith(Product, 'oz'),'oz','g')) ~> GetDifferentColumns",
+						"GetDifferentColumns aggregate(groupBy(Product),",
+						"     ProductName = first(ProductName),",
+						"          each(match(startsWith(name,'Weight')), $$ = first($$))) ~> EliminateDuplicates",
+						"EliminateDuplicates, CheckthdatainProductTable exists(EliminateDuplicates@Product == CheckthdatainProductTable@Product,",
+						"     negate:true,",
+						"     broadcast: 'auto')~> exists1",
+						"exists1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          Product,",
+						"          ProductName,",
+						"          WeightInOunces,",
+						"          WeightInGrams",
+						"     )) ~> dboProduct"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/AzureSQLDB')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/TransformJollyGoodSales')]",
